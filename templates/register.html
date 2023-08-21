@@ -1,34 +1,27 @@
 {% extends "main.html" %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}
+    Register
+{% endblock %}
 
 {% block main %}
-  <h2>Your Profile</h2>
-  <p><strong>Username:</strong> {{ user_data["username"] }}</p>
-  <p><strong>Email:</strong> {{ user_data["mail"] }}</p>
-  <!-- Display more user information as needed -->
-
-  <h2>Your Order History</h2>
-  {% if orders %}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Order Date</th>
-          <th>Total Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for order in orders %}
-          <tr>
-            <td>{{ order["order_id"] }}</td>
-            <td>{{ order["order_date"] }}</td>
-            <td>{{ order["total_amount"] }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No order history available.</p>
-  {% endif %}
+<form action="/register" method="post">
+    <div class="mb-3">
+      <label for="username">Username:</label><br>
+      <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="name/lastname" type="text">
+    </div>
+    <div class="mb-3">
+      <label for="mail">Mail:</label><br>
+      <input class="form-control mx-auto w-auto" id="mail" name="mail" placeholder="Ex: example@gmail.com" type="mail">
+  </div>
+    <div class="mb-3">
+      <label for="password">Password:</label><br>
+      <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+    </div>
+    <div class="mb-3">
+      <label for="confirmation:">Confirmation:</label><br>
+      <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password (again)" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
 {% endblock %}

@@ -17,8 +17,6 @@ app = Flask(__name__)
 # Custom filter
 app.jinja_env.filters["usd"] = usd
 
-
-
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
@@ -200,64 +198,11 @@ def register():
 @app.route("/catalog", methods=["GET", "POST"])
 def catalog():
     """shop catalog"""
-    books = db.excuse("SELECT * FROM books")
+    books = db.execute("SELECT * FROM books")
 
     schoolSupplies = db.excuse("SELECT * FROM school_supplies")
     return render_template('catalog.html', books=books, schoolSupplies=schoolSupplies)
 
-
-@app.route("/cart", methods=["GET", "POST"])
-@login_required
-def cart():
-    """Adding a product to the cart"""
-
-    if request.method == "POST":
-        product_id = int(request.form.get("product_id"))
-        quantity = int(request.form.get("quantity"))
-
-        # Retrieve product details based on the product_id
-        product = next((p for p in products if p["id"] == product_id), None)
-        if product:
-            # You might have a database table that stores cart information
-            # For simplicity, we're using a sample cart data structure
-            user_cart = []  # Replace with the actual user's cart data
-            user_cart.append({"product": product, "quantity": quantity})
-            # Here you would typically insert or update the user's cart in the database
-
-            return redirect("/cart")
-
-    return render_template("cart.html", products=products)
-
-@app.route("/display_cart", methods=["GET", "POST"])
-@login_required
-def display_cart():
-    """Displaying items in cart"""
-
-    # Retrieve the user's cart items from the database
-    # You might have a database table that stores cart information
-    # For simplicity, we're using sample cart data
-    user_id = get_current_user_id()  # Replace with your function to get the current user's ID
-    db_cursor.execute("SELECT product_name, quantity FROM user_cart WHERE user_id = ?", (user_id,))
-    cart_items = db_cursor.fetchall()
-
-    return render_template("cart.html", cart_items=cart_items)
-
-
-
-@app.route("/promotion", methods=["GET", "POST"])
-def promotion():
-    """Display products with discounts"""
-    # Retrieve products from the database with a discount of 20%
-    db_cursor.execute("SELECT name, price, discount FROM products WHERE discount = 20")
-    discounted_products = db_cursor.fetchall()
-
-    # Calculate discounted prices
-    for product in discounted_products:
-        product_name, product_price, discount = product
-        discounted_price = product_price - (product_price * discount / 100)
-        product += (discounted_price,)  # Add discounted price to the product tuple
-
-    return render_template("promotion.html", discounted_products=discounted_products)
 
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -327,3 +272,8 @@ def payment():
 
     return render_template('payment_form.html')
 
+
+""" not done possible routes to add : admin route/ promotions route / bonus piont route
+missing routes product route
+about template
+contact us template"""
