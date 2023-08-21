@@ -1,69 +1,177 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
-    <head>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, width=device-width">
-
-        <!-- http://getbootstrap.com/docs/5.1/ -->
-        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
-        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
-
-        <!-- https://favicon.io/emoji-favicons/money-bag/ -->
-        <link href="/static/favicon.ico" rel="icon">
-
-        <link href="/static/styles.css" rel="stylesheet">
-
-        <title>C$50 Finance: {% block title %}{% endblock %}</title>
-
-    </head>
-
-    <body>
-
-        <nav class="bg-light border navbar navbar-expand-md navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="blue">C</span><span class="red">$</span><span class="yellow">5</span><span class="green">0</span> <span class="red">Finance</span></a>
-                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar">
-                    {% if session["user_id"] %}
-                        <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/quote">special</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/buy">avaible</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/sell">shop_categories</a></li>
-                        </ul>
-                        <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
-                        </ul>
-                    {% else %}
-                        <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-        </nav>
-
-        {% if get_flashed_messages() %}
-            <header>
-                <div class="alert alert-primary mb-0 text-center" role="alert">
-                    {{ get_flashed_messages() | join(" ") }}
-                </div>
-            </header>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Brightness {% block title %}{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <!-- Your stylesheet -->
+    <link href="/static/styles.css" rel="stylesheet">
+    <script src="/static/responsive.js.js"></script>
+    <link rel="icon" href="/static/img/logo.png" type="image/x-icon">
+    <style>
+      .mySlides {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="header">
+      <nav class="navbar">
+        <!--Menu when user logged in-->
+        {% if session["user_id"] %}
+        <ul>
+          <li>
+            <a class="button-52" href="/profile">Profile</a>
+          </li>
+          <li>
+            <a class="button-52" href="/cart">
+              <i class="fa-solid fa-cart-shopping"></i> cart </a>
+          </li>
+          <li>
+            <a class="button-52" href="/remove">Delete Account</a>
+          </li>
+          <li>
+            <a class="button-52" href="/logout">Log Out</a>
+          </li>
+          <a href="#" id="close">
+            <i class="far fa-times"></i>
+          </a>
+        </ul>
+        <!--homepage-->
+        {% else %}
+        <ul>
+          <li>
+            <a class="button-52" href="/catalog">Catalog</a>
+          </li>
+          <li>
+            <a class="button-52" href="/login">Log In</a>
+          </li>
+          <li>
+            <a class="button-52" href="/register">Register</a>
+          </li>
+        </ul>
         {% endif %}
+      </nav>
+       <!--responsive-->
+      <div id="mobile">
+        <a class="nav-link" href="/cart">
+        <i class="fa-solid fa-cart-shopping"></i>Cart </a>
+      <i id="bar" class="fas fa-outdent"></i>
+    </section>
+    {% if request.path == '/' %}
+    <!--hero section-->
+    <section id="hero"></section>
+    <!--features section-->
+    <section id="features" class="section-p1">
+      <div class="aboutus">
+        <h2>Explore our shop now!</h2>
+        <p>Unlock Your Potential. </p>
+      </div>
+      <div class="content section">
+        <img class="mySlides" src="/static/img/features/brands.png">
+        <img class="mySlides" src="/static/img/features/novels (1).png">
+        <img class="mySlides" src="/static/img/features/novels.png">
+        <img class="mySlides" src="/static/img/features/scholaire books.png">
+        <img class="mySlides" src="/static/img/features/scholaire books.png">
+      </div>
+      <script>
+        var myIndex = 0;
+        carousel();
 
-        <main class="container-fluid py-5 text-center">
-            {% block main %}{% endblock %}
-        </main>
-
-        <footer class="mb-5 small text-center text-muted">
-            Data provided by <a href="https://iexcloud.io/">IEX</a>
-        </footer>
-
-    </body>
-
+        function carousel() {
+          var i;
+          var x = document.getElementsByClassName("mySlides");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+          }
+          myIndex++;
+          if (myIndex > x.length) {
+            myIndex = 1
+          }
+          x[myIndex - 1].style.display = "block";
+          setTimeout(carousel, 2000); // Change image every 2 seconds
+        }
+      </script>
+    </section>
+    {% endif %}
+    {% if get_flashed_messages() %}
+    <section id="header">
+      <div class="alert alert-primary mb-0 text-center" role="alert">
+          {{ get_flashed_messages() | join(" ") }}
+      </div>
+    </section>
+    <!--the content section-->
+    <section class="main"> {% block main %}{% endblock %} </section>
+    <!--newsletter section-->
+    <section id="newsletter">
+      <div class="newstext">
+        <h4>Sign up For Newsletters</h4>
+        <p>Get E-mail updates about our latest shop and special offers.</p>
+      </div>
+      <div class="form">
+        <input type="text" placeholder="Your email address"></input>
+        <button class="normal">Sign Up</button>
+      </div>
+    </section>
+    <!--footer section-->
+    <footer class="section-p1">
+      <!--company information-->
+      <div class="col">
+        <img src="/static/img/logo.png" class="logo">
+        <h4>Contact</h4>
+        <p>
+          <strong>Address:</strong>
+        </p>
+        <p>
+          <strong>Phone: </strong>
+        </p>
+        <p>
+          <strong>hours: </strong>
+        </p>
+        <!--company socials-->
+        <div>
+          <h4>Follow Us</h4>
+          <div class="icon">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-pinterest-p"></i>
+          </div>
+        </div>
+      </div>
+      <!--terms of service and more-->
+      <div class="col">
+        <h4>Contact</h4>
+        <a href="#"> About Us </a>
+        <a href="#"> DeliveryInformation </a>
+        <a href="#"> Privacy policy </a>
+        <a href="#"> Terms& Conditions </a>
+      </div>
+      <!--user account-->
+      <div class="col">
+        <h4>My account</h4>
+        <a href="#"> sign in </a>
+        <a href="#"> view cart </a>
+        <a href="#"> track my orders </a>
+      </div>
+      <!--links to app-->
+      <div class="col install">
+        <h4>Installt</h4>
+        <p>From App Store or Google Play </p>
+        <div class="row">
+          <img src="/static/img/app.jpg">
+          <img src="/static/img/play.jpg">
+        </div>
+        <!--payment links-->
+        <p>Secured payment Gateways </p>
+        <img src="/static/img/pay.png">
+      </div>
+      <!--copywrite-->
+      <div class="copyright"> &copy; 2023 | mylink</div>
+    </footer>
+  </body>
 </html>

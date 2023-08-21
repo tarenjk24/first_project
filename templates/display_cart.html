@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Cart
+{% endblock %}
+
+{% block main %}
+<h1>Your Cart</h1>
+<ul>
+    {% for item in cart_items %}
+        <li>{{ item[0] }} - Quantity: {{ item[1] }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

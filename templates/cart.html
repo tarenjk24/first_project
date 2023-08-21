@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Cart
+{% endblock %}
+
+{% block main %}
+<h1>Your Cart</h1>
+<ul>
+    {% for product in products %}
+        <li>
+            {{ product.name }} - Price: ${{ product.price }}
+            <form action="/cart" method="post">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                Quantity: <input type="number" name="quantity" value="1" min="1">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

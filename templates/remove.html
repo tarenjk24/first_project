@@ -1,0 +1,27 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Remove
+{% endblock %}
+
+{% block main %}
+    <form action="/remove" method="post">
+        <div class="mb-3">
+            <label for="username">Username:</label><br>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <label for="password">Password:</label><br>
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <label for="confirmation">Confirmation:</label><br>
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password (again)" type="password">
+        </div>
+        <br>WARNING: If you press the delete button you will loose all of your data.<br>
+        <br>
+        <button class="btn btn-primary" type="submit" value="Delete">Delete Account</button>
+        <br>
+    </form>
+{% endblock %}
+

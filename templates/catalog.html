@@ -1,0 +1,56 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Catalog
+{% endblock %}
+
+{% block main %}
+    <table class="table table-grey table-hover">
+      <thead>
+        <tr>
+          <th class="text-start">title </th>
+          <th class="text-start">author </th>
+          <th class="text-start">description </th>
+          <th class="text-start">price</th>
+          <th class="text-start">quantity</th>
+          <th class="text-start">availability </th>
+          <th class="text-start">genre </th>
+          <th class="text-start">category</th>
+        </tr>
+        <tr>
+          <th class="text-start">name</th>
+          <th class="text-start">description</th>
+          <th class="text-start">price</th>
+          <th class="text-start">brand</th>
+          <th class="text-start">quantity</th>
+          <th class="text-start">availability </th>
+          <th class="text-start"> category </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in books %}
+        <tr>
+          <th class="text-start">{{ books.title }}</th>
+          <th class="text-start">{{ books.author }}</th>
+          <th class="text-start">{{ books.description }}</th>
+          <th class="text-start">{{ books.price }}</th>
+          <th class="text-start">{{ books.quantity }}</th>
+          <th class="text-start">{{ books.availability }}</th>
+          <th class="text-start">{{ books.genre }}</th>
+          <th class="text-start">{{ books.category }}</th>
+        </tr>
+        {% endfor %}
+        {% for schoolSupply in schoolSupplies %}
+        <tr>
+          <th class="text-start">{{ school_supplies.name }}</th>
+          <th class="text-start">{{ school_supplies.description }}</th>
+          <th class="text-start">{{ school_supplies.price}}</th>
+          <th class="text-start">{{ school_supplies.brand }}</th>
+          <th class="text-start">{{ school_supplies.quantity }}</th>
+          <th class="text-start">{{ school_supplies.availability }}</th>
+          <th class="text-start">{{ school_supplies.category }}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

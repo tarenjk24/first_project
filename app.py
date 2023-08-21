@@ -5,16 +5,19 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
+import sqlite3
 
-from helpers import apology, login_required, lookup, usd
+
+from helpers import apology, login_required, usd
 
 
 
 # Configure application
 app = Flask(__name__)
-
 # Custom filter
 app.jinja_env.filters["usd"] = usd
+
+
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
@@ -23,7 +26,10 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL("sqlite:///library.db")
+# Connect to the SQLite database
+db_connection = sqlite3.connect('library.db')
+db_cursor = db_connection.cursor()
 
 
 @app.after_request
@@ -35,30 +41,6 @@ def after_request(response):
     return response
 
 
-@app.route("/")
-@login_required
-def index():
-    return ("to do")
-
-@app.route("/buy", methods=["GET", "POST"])
-@login_required
-def shop_categories ():
-    return ("to do")
-
-
-@app.route("/history")
-@login_required
-def avaible():
-   return ("to do")
-
-
-
-@app.route("/quote", methods=["GET", "POST"])
-@login_required
-def special():
-    """Get stock quote."""
-return ("to do")
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -68,38 +50,38 @@ def login():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return apology("Please provide a username.", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return apology("Please provide a password.", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute(
+            "SELECT * FROM users WHERE username = ?", request.form.get("username")
+        )
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) != 1 or not check_password_hash(
+            rows[0]["hash"], request.form.get("password")
+        ):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
+        return redirect("/main")
     else:
         return render_template("login.html")
 
 
-
-
-@app.route('/remove', methods=['GET', 'POST'])
+@app.route("/remove", methods=["GET", "POST"])
 @login_required
 def remove():
+    """Delete user account"""
     if request.method == "POST":
         # Get user name and password.
         username = request.form.get("username")
@@ -108,34 +90,43 @@ def remove():
 
         # Validate user input.
         if not username:
-            return apology("must provide username", 400)
-        if not password:
-            return apology("must provide password", 400)
-        if not confirmation:
-            return apology("must confirm password", 400)
-        if password != confirmation:
-            return apology("passwords do not match", 400)
+            return apology("Please provide a username.", 400)
+
+        elif not password:
+            return apology("Please provide a password.", 400)
+
+        elif not confirmation:
+            return apology("Please confirm your password.", 400)
+
+        elif password != confirmation:
+            return apology("Passwords do not match.", 400)
 
         # Query the database to check if the username is already taken.
-        old_user = db.execute("SELECT * FROM users WHERE username = :username", username=username)
-        old_account = db.execute("SELECT * FROM account WHERE user_id = :user_id", user_id=session["user_id"])
+        existing_user = db.execute("SELECT * FROM users WHERE username = ?", username)
+        if not existing_user:
+            return apology("Wrong user", 403)
+        else:
+            # Get user id.
+            user_id_data = db.execute(
+                "SELECT id FROM users WHERE username = ?", (username,)
+            )
+            user_id = user_id_data[0]["id"]
 
+            # Delete user's account and related data from the database.
+            db.execute("DELETE FROM orders WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM address WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM USERS WHERE username = ?", (username,))
 
-        if not old_user:
-            return apology("user not found", 400)
+            # Display success message.
+            flash("Account deleted successfully.", "success")
 
-        session["user_id"] = old_user[0]["id"]
+            # Forget any user_id
+            session.clear()
 
-        # Perform the delete operation
-        db.execute("DELETE FROM users WHERE id = :user_id", user_id=session["user_id"])
-        db.execute("DELETE FROM account WHERE user_id = :user_id", user_id=session["user_id"])
-
-        flash('Your account has been deleted.', 'success')
-        return redirect("register.html")
-
-    # Render the remove.html template for GET requests
-    return render_template("remove.html")
-
+            # Redirect user to login form
+            return redirect("/main")
+    else:
+        return render_template("remove.html")
 
 
 @app.route("/logout")
@@ -157,35 +148,42 @@ def register():
     session.clear()
 
     if request.method == "POST":
-
         # Get user name and password.
         username = request.form.get("username")
+        mail = request.form.get("mail")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
         # Validate user input.
-        if not username:
-            return apology("must provide username", 400)
+        if not mail:
+            return apology("Please provide your email.", 400)
+        elif not username:
+            return apology("Please provide a username.", 400)
 
         elif not password:
-            return apology("must provide password", 400)
+            return apology("Please provide a password.", 400)
 
         elif not confirmation:
-            return apology("must confirm password", 400)
+            return apology("Please confirm your password.", 400)
 
         elif password != confirmation:
-            return apology("must confirm password", 400)
+            return apology("Passwords do not match.", 400)
 
         # Query the database to check if the username is already taken.
         existing_user = db.execute("SELECT * FROM users WHERE username = ?", username)
         if len(existing_user) != 0:
-            return apology("userename taken", 400)
+            return apology("userename is already taken. Please choose another username.", 400)
 
         # Generate a hash of the password.
         hashed_password = generate_password_hash(password)
 
         # Insert the new user into the database.
-        db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hashed_password)
+        db.execute(
+            "INSERT INTO users (username, hash, mail) VALUES (?, ?, ?)",
+            username,
+            hashed_password,
+            mail
+        )
 
         # Query the database for newly inserted user.
         new_user = db.execute("SELECT * FROM users WHERE username = ?", username)
@@ -193,8 +191,139 @@ def register():
         # Remember user.
         session["user_id"] = new_user[0]["id"]
 
-        flash("Registration successful.", "success")
-        return redirect("/")
+        # Display success message.
+        flash("Registration Successful. Welcome to Book Brightness!", "success")
+        return redirect("/login")
     else:
         return render_template("register.html")
+
+@app.route("/catalog", methods=["GET", "POST"])
+def catalog():
+    """shop catalog"""
+    books = db.excuse("SELECT * FROM books")
+
+    schoolSupplies = db.excuse("SELECT * FROM school_supplies")
+    return render_template('catalog.html', books=books, schoolSupplies=schoolSupplies)
+
+
+@app.route("/cart", methods=["GET", "POST"])
+@login_required
+def cart():
+    """Adding a product to the cart"""
+
+    if request.method == "POST":
+        product_id = int(request.form.get("product_id"))
+        quantity = int(request.form.get("quantity"))
+
+        # Retrieve product details based on the product_id
+        product = next((p for p in products if p["id"] == product_id), None)
+        if product:
+            # You might have a database table that stores cart information
+            # For simplicity, we're using a sample cart data structure
+            user_cart = []  # Replace with the actual user's cart data
+            user_cart.append({"product": product, "quantity": quantity})
+            # Here you would typically insert or update the user's cart in the database
+
+            return redirect("/cart")
+
+    return render_template("cart.html", products=products)
+
+@app.route("/display_cart", methods=["GET", "POST"])
+@login_required
+def display_cart():
+    """Displaying items in cart"""
+
+    # Retrieve the user's cart items from the database
+    # You might have a database table that stores cart information
+    # For simplicity, we're using sample cart data
+    user_id = get_current_user_id()  # Replace with your function to get the current user's ID
+    db_cursor.execute("SELECT product_name, quantity FROM user_cart WHERE user_id = ?", (user_id,))
+    cart_items = db_cursor.fetchall()
+
+    return render_template("cart.html", cart_items=cart_items)
+
+
+
+@app.route("/promotion", methods=["GET", "POST"])
+def promotion():
+    """Display products with discounts"""
+    # Retrieve products from the database with a discount of 20%
+    db_cursor.execute("SELECT name, price, discount FROM products WHERE discount = 20")
+    discounted_products = db_cursor.fetchall()
+
+    # Calculate discounted prices
+    for product in discounted_products:
+        product_name, product_price, discount = product
+        discounted_price = product_price - (product_price * discount / 100)
+        product += (discounted_price,)  # Add discounted price to the product tuple
+
+    return render_template("promotion.html", discounted_products=discounted_products)
+
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    """User profile and history"""
+    user_id = session["user_id"]
+
+    # Fetch user data and order history from the database
+    user_data = db.execute("SELECT * FROM users WHERE id = ?", user_id)
+    orders = db.execute("SELECT * FROM orders WHERE user_id = ?", user_id)
+
+    return render_template("profile.html", user_data=user_data[0], orders=orders)
+
+@app.route("/checkout", methods=["GET", "POST"])
+@login_required
+def checkout():
+    if request.method == "POST":
+        # Get user input data from the form
+        city = request.form.get("city")
+        state = request.form.get("state")
+        address = request.form.get("address")
+        postal_code = request.form.get("postal_code")
+        phone_number = request.form.get("phone_number")
+        note = request.form.get("note", "Default Note")
+
+        # Validate user input
+        if not city or not state or not address or not postal_code or not phone_number:
+            return apology("Please provide all required information.", 400)
+
+        if not postal_code.isdigit() or int(postal_code) <= 0:
+            return apology("Invalid postal code. Please provide a valid postal code.", 400)
+
+        if not phone_number.isdigit() or int(phone_number) <= 0:
+            return apology("Invalid phone number. Please provide a valid phone number.", 400)
+
+        # Insert user data into the database
+        db.execute(
+            "INSERT INTO address (city, state, address, postal_code, phone_number, note) VALUES (?, ?, ?, ?, ?, ?)",
+            (city, state, address, postal_code, phone_number, note)
+        )
+        db.commit()
+
+        # Display success message to the user
+        flash("Address saved successfully.", "success")
+
+        # Redirect the user to the payment page
+        return redirect("/payment")  # Use the route name here
+
+    else:
+        # Render the checkout template when the request method is GET
+        return render_template("checkout.html")
+
+
+@app.route("/payment", methods=["GET", "POST"])
+@login_required
+def payment():
+    if request.method == 'POST':
+        selected_method = request.form.get('method_paying')
+
+        if selected_method == 'cash':
+            # Perform actions for cash payment
+            return "Thank you for your order! We will deliver soon."
+        elif selected_method == 'other':
+            # Perform actions for other payment methods
+            return "Please proceed to the payment gateway."
+
+    return render_template('payment_form.html')
 

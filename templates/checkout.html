@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Check Out
+{% endblock %}
+
+{% block main %}
+<form action="/checkout" method="post">
+    <div class="mb-3">
+        <label for="city">City</label>
+        <input class="form-control" name="city" placeholder="e.g. Razi" type="text">
+    </div>
+    <div class="mb-3">
+        <label for="state">State</label>
+        <input class="form-control" name="state" placeholder="e.g. Manouba" type="text">
+    </div>
+    <div class="mb-3">
+        <label for="address">Address</label>
+        <input class="form-control" name="address" placeholder="e.g. Street name - House number - State - Tunisia" type="text">
+    </div>
+    <div class="mb-3">
+        <label for="postal_code">Postal Code</label>
+        <input class="form-control" name="postal_code" placeholder="e.g. 1240" type="text">
+    </div>
+    <div class="mb-3">
+        <label for="phone_number">Phone Number</label>
+        <input class="form-control" name="phone_number" placeholder="e.g. 216+" type="text">
+    </div>
+    <div class="mb-3">
+        <label for="note">Delivery Note</label>
+        <textarea name="note" class="form-control" rows="4" placeholder="Leave us a note here"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+{% endblock %}
