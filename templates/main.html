@@ -65,19 +65,96 @@
     {% if request.path == '/' %}
     <!--hero section-->
     <section id="hero"></section>
-    <!--features section-->
-    <section id="features" class="section-p1">
-      <div class="aboutus">
-        <h2>Explore our shop now!</h2>
-        <p>Unlock Your Potential. </p>
+    <!--features section-->>
+    <section >
+      <div class="center">
+        <div class="stack-area">
+          <div class="left">
+            <div class="title">Our Features</div>
+            <div class="sub-title">
+              <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente
+              qui quis, facere, cupiditate, doloremque natus ex perspiciatis
+              ratione hic corrupti adipisci ea doloribus!
+              </p><br />
+              <button>See More Details</button>
+            </div>
+          </div>
+          <div class="right">
+            <div class="cards">
+              <div class="card">
+                <div class="sub">Simplified</div>
+                <div class="content">Complex tasks are now simple</div>
+              </div>
+              <div class="card">
+                <div class="sub">Boost Productivity</div>
+                <div class="content">Perform Tasks in less time</div>
+              </div>
+              <div class="card">
+                <div class="sub">Facilitated learning</div>
+                <div class="content">train anyone from anywhere</div>
+              </div>
+              <div class="card">
+                <div class="sub">Support</div>
+                <div class="content">Now its 24/7 support</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <script>
+        let cards = document.querySelectorAll(".card");
+        let stackArea = document.querySelector(".stack-area");
+
+        function rotateCards() {
+          let angle = 0;
+          cards.forEach((card) => {
+            if (card.classList.contains("active")) {
+              card.style.transform = `translate(-50%, -120vh) rotate(-48deg)`;
+            } else {
+              card.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+              angle = angle - 10;
+            }
+          });
+        }
+
+        rotateCards();
+
+        window.addEventListener("scroll", () => {
+          let proportion =
+            stackArea.getBoundingClientRect().top / window.innerHeight;
+          if (proportion <= 0) {
+            let n = cards.length;
+            let index = Math.ceil((proportion * n) / 2);
+            index = Math.abs(index) - 1;
+            for (let i = 0; i < n; i++) {
+              if (i <= index) {
+                cards[i].classList.add("active");
+              } else {
+                cards[i].classList.remove("active");
+              }
+            }
+            rotateCards();
+          }
+        });
+      </script>
+    </section>
+    <!--products section-->
+    <section id="features" class="section-p1">
+        <div class="center">
+          <div class="stack-area">
+            <div class="left">
+              <div class="title">Our products</div>
+        <p>Explore our shop now! </p>
+      </div>
+      <div class="right">
       <div class="content section">
         <img class="mySlides" src="/static/img/features/brands.png">
         <img class="mySlides" src="/static/img/features/novels (1).png">
         <img class="mySlides" src="/static/img/features/novels.png">
         <img class="mySlides" src="/static/img/features/scholaire books.png">
         <img class="mySlides" src="/static/img/features/scholaire books.png">
-      </div>
+    </div> </div> </div> </div></div>
       <script>
         var myIndex = 0;
         carousel();
