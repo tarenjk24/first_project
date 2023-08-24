@@ -5,16 +5,149 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <label for="username">Username:</label><br>
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="mb-3">
-            <label for="password">Password:</label><br>
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
-    </form>
+<style>
+  /*style form*/
+body {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      .stack-area {
+    width: 100%;
+    height: 300vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+.center {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+      }
+form {
+        width: 440px;
+        height: fit-content;
+        min-height: 338px;
+        padding: 44px;
+        background: white;
+        box-sizing: border-box;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px;
+      }
+.label {
+    color: black;
+    font-size: 15px;
+}
+
+.section {
+        display: block;
+        min-width: 352px;
+        width: 352px;
+        min-height: 110px;
+      }
+.head {
+        color:black;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        margin-top: 16px;
+      }
+.inputf {
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 16px;
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+        padding: 2px;
+      }
+.input {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        font-family: "Segoe UI";
+        font-size: 15px;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid black;
+        padding: 6px 10px 6px 0px;
+        color: rgb(27, 27, 27);
+        line-height: 20px;
+      }
+.input::placeholder {
+        color: rgba(0, 0, 0, 0.6);
+      }
+.info {
+        width: 100%;
+        font-size: 13px;
+        display: block;
+        position: relative;
+        width: fit-content;
+        margin-bottom: 16px;
+      }
+</style>
+<div class="stack-area">
+<div class="center" id="div">
+<form action="/login" method="post">
+            <span class="section">
+              <div class="head">Sign in</div>
+              <span class="inputf">
+                <span class="label">
+                    Enter your username:
+                </span>
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+                <div class="invalid-feedback">Oops, Username is required</div>
+              </span>
+         </span>
+              <span class="inputf">
+                <span class="label">
+                    Enter your password:
+                </span>
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" required="" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$" autocomplete="no">
+                <div class="valid-feedback">Nice looks good!</div>
+                <div class="invalid-feedback">6 chars (1 upper, 1 lower &amp; numeric)</div>
+              </span>
+              <div class="info"><a href="/recover">Forgotten your password?</a></div>
+              <div class="info">
+                <div class="info"><a href="/register">No account? Create one!</a></div>
+              </div>
+                <button class="button-52" type="submit">Sign in</button>
+            </span>
+        </form>
+      </div>
+    </div>
+  <script>
+   // form validation
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // fetch all the forms we want to apply custom style
+    var inputs = document.getElementsByClassName('form-control')
+
+    // loop over each input and watch blue event
+    var validation = Array.prototype.filter.call(inputs, function(input) {
+
+      input.addEventListener('blur', function(event) {
+        // reset
+        input.classList.remove('is-invalid')
+        input.classList.remove('is-valid')
+
+        if (input.checkValidity() === false) {
+            input.classList.add('is-invalid')
+        }
+        else {
+            input.classList.add('is-valid')
+        }
+      }, false);
+    });
+  }, false);
+})()
+
+  </script>
+</form>
 {% endblock %}
+
 
