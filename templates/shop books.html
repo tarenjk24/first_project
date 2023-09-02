@@ -34,35 +34,39 @@
   width: 100%;
   border-radius: 20px;
 }
-
+#product1 .pro .des{
+  text-align: start;
+  padding: 10px 0;
+}
+#product1 .pro .des span{
+  color: black;
+  font-size: 12px;
+}
+#product1 .pro .des h5{
+  padding-top: 7px;
+  color: black;
+  font-size: 14px;
+}
+#product1 .pro .des h4{
+  padding-top: 7px;
+  color: gold;
+  font-size: 15px;
+  font-weight: 700;
+}
 </style>
+</section>
 <section id="product1" class="section-p1">
   <h2>Featured Products</h2>
   <div class="pro-container">
+    {% for book in books %}
     <div class="pro">
-    <ul class="row">
-			<li class="col-xs-6 col-md-3">
-			<a href="/">
-				<img src="/static/img/products/bic.jpg" alt="">
-			</a>
-		</li>
-			<li class="col-xs-6 col-md-3">
-        <a href="/">
-				<img src="/static/img/products/curriculum.png" alt="Acrylique Liquitex">
-			</a>
-		</li>
-			<li class="col-xs-6 col-md-3">
-        <a href="/">
-				<img src="/static/img/products/grades.png" alt="Crayon Aquarelle">
-			</a>
-		</li>
-			<li class="col-xs-6 col-md-3">
-        <a href="/">
-				<img src="/static/img/products/sputnik sweetheart .jpg" alt="Peinture Aquarelle">
-			</a>
-		</li>
-		</ul>
+      <img src="{{ url_for('static', filename=books.cover) }}">
+      <div class="des">
+        <span>{{ book.author }}</span>
+        <h5>{{ book.title }}</h5>
+        <h4>{{ book.price }}</h4>
+      </div>
+    </div>
+    {% endfor %}
   </div>
-</div>
 </section>
-{% endblock %}

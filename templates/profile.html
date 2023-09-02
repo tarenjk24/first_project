@@ -3,10 +3,16 @@
 {% block title %}Profile{% endblock %}
 
 {% block main %}
-  <h2>Your Profile</h2>
+<!--Add css to make it look nice -->
+  <h2>Personal Information</h2>
   <p><strong>Username:</strong> {{ user_data["username"] }}</p>
   <p><strong>Email:</strong> {{ user_data["mail"] }}</p>
-  <!-- Display more user information as needed/ add possibilty to change password -->
+  <!-- Display more user information -->
+    <!-- Add a link to change password and username -->
+    <p><a href="{% url 'change_password' %}">Change Password</a></p>
+    <!-- Add a link to remove account -->
+    <p><a href="{% url 'remove_account' %}">Remove Account</a></p>
+  
 
   <h2>Your Order History</h2>
   {% if orders %}

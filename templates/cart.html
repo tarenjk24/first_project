@@ -5,19 +5,21 @@
 {% endblock %}
 
 {% block main %}
-<h1>Your Cart</h1>
-<ul>
-      <!-- not done you need to edit ur database order_items table that it is related with both ur products and edit code as required -->
-
+<h2>Your Cart</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for product in products %}
-        <li>
-            {{ product.name }} - Price: ${{ product.price }}
-            <form action="/cart" method="post">
-                <input type="hidden" name="product_id" value="{{ product.id }}">
-                Quantity: <input type="number" name="quantity" value="1" min="1">
-                <button type="submit">Add to Cart</button>
-            </form>
-        </li>
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+      </tr>
     {% endfor %}
-</ul>
+  </tbody>
+</table>
 {% endblock %}

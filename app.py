@@ -5,8 +5,9 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-import sqlite3
+from flask_login import current_user
 
+import sqlite3
 
 from helpers import apology, login_required, usd
 
@@ -25,9 +26,6 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///library.db")
-# Connect to the SQLite database
-db_connection = sqlite3.connect('library.db')
-db_cursor = db_connection.cursor()
 
 
 @app.after_request
@@ -38,7 +36,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-
+"""User authentications"""
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -71,7 +69,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/main")
+        return redirect("/")
     else:
         return render_template("login.html")
 
@@ -122,7 +120,7 @@ def remove():
             session.clear()
 
             # Redirect user to login form
-            return redirect("/main")
+            return redirect("/")
     else:
         return render_template("remove.html")
 
@@ -148,14 +146,11 @@ def register():
     if request.method == "POST":
         # Get user name and password.
         username = request.form.get("username")
-        mail = request.form.get("mail")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
         # Validate user input.
-        if not mail:
-            return apology("Please provide your email.", 400)
-        elif not username:
+        if not username:
             return apology("Please provide a username.", 400)
 
         elif not password:
@@ -180,7 +175,6 @@ def register():
             "INSERT INTO users (username, hash, mail) VALUES (?, ?, ?)",
             username,
             hashed_password,
-            mail
         )
 
         # Query the database for newly inserted user.
@@ -191,18 +185,63 @@ def register():
 
         # Display success message.
         flash("Registration Successful. Welcome to Book Brightness!", "success")
-        return redirect("/login")
+        return redirect("/")
     else:
         return render_template("register.html")
 
-@app.route("/catalog", methods=["GET", "POST"])
+
+@app.route("/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    if request.method == "POST":
+        old_password = request.form.get("old_password")
+        new_password = request.form.get("new_password")
+        confirmation = request.form.get("confirmation")
+
+        # Validate form data
+        if not old_password or not new_password or not confirmation:
+            return apology("Please confirm your password.", 400)
+
+        if not check_password_hash(current_user.password_hash, old_password):
+            return apology("Please confirm your password.", 400)
+
+        if new_password != confirmation:
+            return apology("Please confirm your password.", 400)
+        # Update user's password
+        current_user.password_hash = generate_password_hash(new_password)
+        db.commit()
+
+        flash("Password changed successfully!", "success")
+        return redirect("/profile") # Replace with your profile route
+    else:
+        return render_template("change_password.html")
+
+"""display Products"""
+@app.route("/catalog")
 def catalog():
     """shop catalog"""
     books = db.execute("SELECT * FROM books")
 
-    schoolSupplies = db.excuse("SELECT * FROM school_supplies")
+    schoolSupplies = db.execute("SELECT * FROM school_supplies")
     return render_template('catalog.html', books=books, schoolSupplies=schoolSupplies)
 
+
+    """display books"""
+@app.route("/shop_books", methods=["GET", "POST"])
+def shop_books():
+
+    novels = db.execute("SELECT * FROM books where category = 'novel'")
+    grades = db.execute("SELECT * FROM books where category = 'grade'")
+    curriculums = db.execute("SELECT * FROM books where category = 'curriculum'")
+
+    return render_template('shop_books.html', novels=novels, grades=grades, curriculums=curriculums)
+
+    """display schoolsupplies"""
+@app.route("/school_supplies_shop", methods=["GET", "POST"])
+def school_supplies_shop():
+    """display books"""
+    schoolSupplies = db.execute("SELECT * FROM school_supplies")
+    return render_template('school_supplies_shop.html', schoolSupplies=schoolSupplies)
 
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -216,6 +255,64 @@ def profile():
     orders = db.execute("SELECT * FROM orders WHERE user_id = ?", user_id)
 
     return render_template("profile.html", user_data=user_data[0], orders=orders)
+
+
+"""payment and cart"""
+
+@app.route("/cart", methods=["GET", "POST"])
+@login_required
+def cart():
+    cart_items = Cart.query.filter_by(user_id=current_user.id).all()
+    product_ids = [item.product_id for item in cart_items]
+    products_in_cart = Product.query.filter(Product.id.in_(product_ids)).all()
+
+    return render_template("cart.html", products=products_in_cart)
+
+
+@app.route("/books", methods=["POST"])
+@login_required
+def books():
+
+    if request.method == "POST":
+        quantity = request.form.get("quantity")
+         product_id = int(request.form.get('product_id'))
+        product = Product.query.get(id)
+        if product:
+            # Insert values to account.
+        db.execute(
+            "INSERT INTO cart (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)",
+            user_id=session["user_id"],
+            quantity=quantity,
+        )
+            flash("Product added to cart.", "success")
+        else:
+            flash("Product not found.", "error")
+    else:
+        # Redirect to a default page if necessary
+        return redirect("/")
+
+
+@app.route("/schoolsupplies", methods=["POST"])
+@login_required
+def schoolsupplies():
+
+    if request.method == "POST":
+        quantity = request.form.get("quantity")
+         product_id = int(request.form.get('product_id'))
+        product = Product.query.get(id)
+        if product:
+            # Insert values to account.
+        db.execute(
+            "INSERT INTO cart (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)",
+            user_id=session["user_id"],
+            quantity=quantity,
+        )
+            flash("Product added to cart.", "success")
+        else:
+            flash("Product not found.", "error")
+    else:
+        # Redirect to a default page if necessary
+        return redirect("/")
 
 @app.route("/checkout", methods=["GET", "POST"])
 @login_required
@@ -268,12 +365,17 @@ def payment():
             return "Thank you for your order! We will deliver soon."
         elif selected_method == 'other':
             # Perform actions for other payment methods
+            # maybe not
+
+
             return "Please proceed to the payment gateway."
 
     return render_template('payment_form.html')
+
 
 
 """ not done possible routes to add : admin route/ promotions route / bonus piont route
 missing routes product route
 about template
 contact us template"""
+
