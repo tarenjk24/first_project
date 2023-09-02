@@ -26,13 +26,19 @@
         {% if session["user_id"] %}
         <ul>
           <li>
+            <a class="button-52" href="/catalog">Catalog</a>
+          </li>
+          <li>
+            <a class="button-52" href="/Books">Books</a>
+          </li>
+          <li>
+            <a class="button-52" href="/supplies">School Supplies</a>
+          </li>
+          <li>
             <a class="button-52" href="/profile">Profile</a>
           </li>
           <li>
             <a class="button-52" href="/cart"> cart </a>
-          </li>
-          <li>
-            <a class="button-52" href="/catalog">Catalog</a>
           </li>
           <li>
             <a class="button-52" href="/logout">Log Out</a>
@@ -49,11 +55,11 @@
           </li>
           <!--add books categories-->
           <li>
-            <a class="button-52" href="/books">Books</a>
+            <a class="button-52" href="/Books">Books</a>
           </li>
           <!--add school supplies-->
           <li>
-            <a class="button-52" href="/school_supplies">School Supplies</a>
+            <a class="button-52" href="/supplies">School Supplies</a>
           </li>
           <li>
             <a class="button-52" href="/login">Log In</a>
@@ -76,33 +82,34 @@
       <div class="center">
         <div class="stack-area">
           <div class="left">
-            <div class="title">Our Features</div>
+            <div class="title">Discover Our Library Treasures</div>
             <div class="sub-title">
               <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente
-              qui quis, facere, cupiditate, doloremque natus ex perspiciatis
-              ratione hic corrupti adipisci ea doloribus!
+                Dive into a world of literary wonders! At our library shop, we offer a handpicked
+                collection of books that will transport you to new realms of imagination and knowledge.
+                Explore our selection to find captivating stories and insightful reads for all ages.
               </p><br />
-              <button>See More Details</button>
+              <button><a class="nav-link" href="/catalog">
+                See More Details</a></button>
             </div>
           </div>
           <div class="right">
             <div class="cards">
               <div class="card">
-                <div class="sub">Simplified</div>
-                <div class="content">Complex tasks are now simple</div>
+                <div class="sub">Easy Book Access</div>
+                <div class="content">Discover and acquire books with just a click</div>
               </div>
               <div class="card">
-                <div class="sub">Boost Productivity</div>
-                <div class="content">Perform Tasks in less time</div>
+                <div class="sub">Enhance Efficiencyy</div>
+                <div class="content">Accomplish tasks more quickly and effectively</div>
               </div>
               <div class="card">
-                <div class="sub">Facilitated learning</div>
-                <div class="content">train anyone from anywhere</div>
+                <div class="sub">Seamless Learning</div>
+                <div class="content">Immerse yourself in learning with books at your fingertips</div>
               </div>
               <div class="card">
-                <div class="sub">Support</div>
-                <div class="content">Now its 24/7 support</div>
+                <div class="sub">24/7 Support</div>
+                <div class="content">We're here to assist you anytime you need</div>
               </div>
             </div>
           </div>
@@ -207,6 +214,8 @@
       <!--company information-->
       <div class="col">
         <img src="/static/img/logo.png" class="logo">
+      </div>
+      <div class="col">
         <h4>Contact</h4>
         <p>
           <strong>Address:</strong>
@@ -221,35 +230,37 @@
         <div>
           <h4>Follow Us</h4>
           <div class="icon">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-pinterest-p"></i>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
           </div>
         </div>
       </div>
       <!--terms of service and more-->
       <div class="col">
         <h4>Contact</h4>
-        <a href="#"> About Us </a>
-        <a href="#"> DeliveryInformation </a>
-        <a href="#"> Privacy policy </a>
-        <a href="#"> Terms& Conditions </a>
+        <a href="about_us.html"> About Us </a>
+        <a href="delivery_information.html"> DeliveryInformation </a>
+        <a href="privac_ policy.html"> Privacy policy </a>
+        <a href="terms_conditions.html"> Terms& Conditions </a>
       </div>
+
       <!--user account-->
       <div class="col">
         <h4>My account</h4>
-        <a href="#"> sign in </a>
-        <a href="#"> view cart </a>
-        <a href="#"> track my orders </a>
+        <a href="/login"> sign in </a>
+        <a href="/cart"> view cart </a>
+        <a href="checkout"> Check Out </a>
+        <a href="userinfo.html"> Personal Information </a>
       </div>
       <!--links to app-->
       <div class="col install">
         <h4>Installt</h4>
         <p>From App Store or Google Play </p>
         <div class="row">
-          <img src="/static/img/app.jpg">
-          <img src="/static/img/play.jpg">
+          <a href="comingsoon.html"> <img src="/static/img/app.jpg"></a>
+            <a href="comingsoon.html"><img src="/static/img/play.jpg"></a>
         </div>
         <!--payment links-->
         <p>Secured payment Gateways </p>

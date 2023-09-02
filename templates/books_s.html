@@ -1,7 +1,7 @@
 {% extends "main.html" %}
 
 {% block title %}
-    Catalog
+    Books
 {% endblock %}
 
 {% block main %}
@@ -58,15 +58,41 @@
 <section id="product1" class="section-p1">
   <h2>Featured Products</h2>
   <div class="pro-container">
-    {% for book in books %}
+    {% for novel in novels %}
+<div class="pro">
+  <img src="{{ url_for('static', filename=novel.image) }}">
+  <div class="des">
+    <span>{{ novel.author }}</span>
+    <h5>{{ novel.title }}</h5>
+    <h4>{{ novel.price }}</h4>
+  </div>
+</div>
+{% endfor %}
+  </div>
+  <div class="pro-container">
+    {% for grade in grades %}
     <div class="pro">
-      <img src="{{ url_for('static', filename=books.cover) }}">
+      <img src="{{ url_for('static', filename=grade.image) }}">
       <div class="des">
-        <span>{{ book.author }}</span>
-        <h5>{{ book.title }}</h5>
-        <h4>{{ book.price }}</h4>
+        <span>{{ grade.author }}</span>
+        <h5>{{ grade.title }}</h5>
+        <h4>{{ grade.price }}</h4>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+  <div class="pro-container">
+    {% for curriculum in curriculums %}
+    <div class="pro">
+      <img src="{{ url_for('static', filename=curriculum.image) }}">
+      <div class="des">
+        <span>{{ curriculum.author }}</span>
+        <h5>{{ curriculum.title }}</h5>
+        <h4>{{ curriculum.price }}</h4>
       </div>
     </div>
     {% endfor %}
   </div>
 </section>
+{% endblock %}

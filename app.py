@@ -227,8 +227,8 @@ def catalog():
 
 
     """display books"""
-@app.route("/shop_books", methods=["GET", "POST"])
-def shop_books():
+@app.route("/books_s", methods=["GET", "POST"])
+def books_s():
 
     novels = db.execute("SELECT * FROM books where category = 'novel'")
     grades = db.execute("SELECT * FROM books where category = 'grade'")
@@ -237,8 +237,8 @@ def shop_books():
     return render_template('shop_books.html', novels=novels, grades=grades, curriculums=curriculums)
 
     """display schoolsupplies"""
-@app.route("/school_supplies_shop", methods=["GET", "POST"])
-def school_supplies_shop():
+@app.route("/supplies", methods=["GET", "POST"])
+def supplies():
     """display books"""
     schoolSupplies = db.execute("SELECT * FROM school_supplies")
     return render_template('school_supplies_shop.html', schoolSupplies=schoolSupplies)
@@ -292,9 +292,9 @@ def books():
         return redirect("/")
 
 
-@app.route("/schoolsupplies", methods=["POST"])
+@app.route("/supplies", methods=["POST"])
 @login_required
-def schoolsupplies():
+def supplies():
 
     if request.method == "POST":
         quantity = request.form.get("quantity")

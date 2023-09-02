@@ -22,4 +22,8 @@
     {% endfor %}
   </tbody>
 </table>
+<a class="button-52" href="/checkout">Check Out</a>
+{% if not product %}
+<p>add items</p>
+{% endif %}
 {% endblock %}

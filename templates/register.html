@@ -99,7 +99,6 @@
                       Enter your username:
                   </span>
                   <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-                  <div class="invalid-feedback">Oops, Username is required</div>
                 </span>
            </span>
                 <span class="inputf">
@@ -107,16 +106,12 @@
                       Enter your password:
                   </span>
                   <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" required="" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$" autocomplete="no">
-                  <div class="valid-feedback">Nice looks good!</div>
-                  <div class="invalid-feedback">6 chars (1 upper, 1 lower &amp; numeric)</div>
                 </span>
                 <span class="inputf">
                     <span class="label">
                         Confirm your password:
                     </span>
                     <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password (again)" type="password">
-                    <div class="valid-feedback">Nice looks good!</div>
-                    <div class="invalid-feedback">6 chars (1 upper, 1 lower &amp; numeric)</div>
                   </span>
                 <span class="btn">
                   <button class="button-52" type="button">Sign up</button>
@@ -125,33 +120,5 @@
           </form>
         </div>
       </div>
-    <script>
-     // form validation
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // fetch all the forms we want to apply custom style
-      var inputs = document.getElementsByClassName('form-control')
-
-      // loop over each input and watch blue event
-      var validation = Array.prototype.filter.call(inputs, function(input) {
-
-        input.addEventListener('blur', function(event) {
-          // reset
-          input.classList.remove('is-invalid')
-          input.classList.remove('is-valid')
-
-          if (input.checkValidity() === false) {
-              input.classList.add('is-invalid')
-          }
-          else {
-              input.classList.add('is-valid')
-          }
-        }, false);
-      });
-    }, false);
-  })()
-
-    </script>
   </form>
 {% endblock %}
