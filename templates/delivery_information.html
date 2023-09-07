@@ -1,26 +1,169 @@
-# Delivery Information
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-At [Your Business Name], we are dedicated to providing you with a seamless delivery experience. Here's what you need to know about our delivery process:
+    <!-- Your stylesheet -->
+    <link href="/static/styles.css" rel="stylesheet">
+    <script src="/static/responsive.js"></script>
+    <link rel="icon" href="/static/img/logo.png" type="image/x-icon">
 
-## Shipping Options
+        <title>Books Brightness {% block title %}{% endblock %}</title>
 
-[Detail the shipping methods available, including standard, expedited, and any special options.]
+  </head>
+  <body>
+    <section id="header">
+      <nav class="navbar">
+        <!--Menu when user logged in-->
+        {% if session["user_id"] %}
+        <ul>
 
-## Shipping Costs
+          <li>
+            <a class="button-52" href="/Books_s">Books</a>
+          </li>
+          <li>
+            <a class="button-52" href="/products">School Supplies</a>
+          </li>
+          <li>
+            <a class="button-52" href="/profile">Profile</a>
+          </li>
+          <li>
+            <a class="button-52" href="/cart"> cart </a>
+          </li>
+          <li>
+            <a class="button-52" href="/logout">Log Out</a>
+          </li>
+          <a href="#" id="close">
+            <i class="far fa-times"></i>
+          </a>
+        </ul>
+        <!--homepage-->
+        {% else %}
+        <ul>
+          <li>
+            <a class="button-52" href="/Books_s">Books</a>
+          </li>
+          <!--add school supplies-->
+          <li>
+            <a class="button-52" href="/products">School Supplies</a>
+          </li>
+          <li>
+            <a class="button-52" href="/login">Log In</a>
+          </li>
+        </ul>
+        {% endif %}
+      </nav>
+       <!--responsive-->
+      <div id="mobile">
+        <a class="nav-link" href="/cart">
+        <i class="fa-solid fa-cart-shopping"></i>Cart </a>
+      <i id="bar" class="fas fa-outdent"></i>
+</div>
+    </section>
+<!--hero section-->
+<section id="hero"></section>
+   <!-- Delivery Information Section -->
+<section id="delivery-info" class="section-p1">
+    <div class="container">
+        <h2>Delivery Information</h2>
 
-[Explain how shipping costs are calculated, whether they're based on order value, weight, or location.]
+        <div class="info-section">
+            <h3>Shipping Options</h3>
+            <p>[Detail the shipping methods available, including standard, expedited, and any special options.]</p>
+        </div>
 
-## Delivery Times
+        <div class="info-section">
+            <h3>Shipping Costs</h3>
+            <p>[Explain how shipping costs are calculated, whether they're based on order value, weight, or location.]</p>
+        </div>
 
-[Provide estimated delivery times for different shipping options and regions.]
+        <div class="info-section">
+            <h3>Delivery Times</h3>
+            <p>[Provide estimated delivery times for different shipping options and regions.]</p>
+        </div>
 
-## Tracking Orders
+        <div class="info-section">
+            <h3>Tracking Orders</h3>
+            <p>[Explain how customers can track their orders and provide necessary tracking links.]</p>
+        </div>
 
-[Explain how customers can track their orders and provide necessary tracking links.]
+        <div class="info-section">
+            <h3>International Shipping</h3>
+            <p>[If applicable, detail international shipping policies, customs fees, and delivery times.]</p>
+        </div>
 
-## International Shipping
+        <p>If you have any questions about our delivery process, feel free to reach out to our customer support team.</p>
+    </div>
+</section>
 
-[If applicable, detail international shipping policies, customs fees, and delivery times.]
 
-If you have any questions about our delivery process, feel free to reach out to our customer support team.
+    <!--footer section-->
+    <footer class="section-p1">
+      <!--company information-->
+      <div class="col">
+        <img src="/static/img/logo.png" alt="" class="logo">
+      </div>
+      <div class="col">
+        <h4>Contact</h4>
+        <p>
+          <strong>Address:</strong>
+        </p>
+        <p>
+          <strong>Phone: </strong>
+        </p>
+        <p>
+          <strong>hours: </strong>
+        </p>
+        <!--company socials-->
+        <div>
+          <h4>Follow Us</h4>
+          <div class="icon">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+      </div>
+      <!--terms of service and more-->
+      <div class="col">
+        <h4>Contact</h4>
+        <a href="/templates/about_us.html"> About Us </a>
+        <a href=""> DeliveryInformation </a>
+        <a href=""> Privacy policy </a>
+        <a href=""> Terms& Conditions </a>
+      </div>
+
+      <!--user account-->
+      <div class="col">
+        <h4>My account</h4>
+        <a href="/login"> sign in </a>
+        <a href=""> view cart </a>
+        <a href=""> Whish list </a>
+        <a href=""> Personal Information </a>
+      </div>
+      <!--links to app-->
+      <div class="col install">
+        <h4>Installt</h4>
+        <p>From App Store or Google Play </p>
+        <div class="row">
+          <a href="/comingsoon.html"> <img src="/static/img/app.jpg" alt=""></a>
+            <a href="/comingsoon.html"><img src="/static/img/play.jpg" alt=""></a>
+        </div>
+        <!--payment links-->
+        <p>Secured payment Gateways </p>
+        <img src="/static/img/pay.png" alt="">
+      </div>
+      <!--copywrite-->
+      <div class="copyright"> &copy; 2023 | mylink</div>
+    </footer>
+
+  </body>
+</html>
 

@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    curriculums
+{% endblock %}
+
+{% block main %}
+ <style>
+    #product1 {
+      text-align: center;
+    }
+
+    #product1 .pro-container {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    #product1 .pro {
+      width: 23%;
+      min-width: 250px;
+      padding: 10px 12px;
+      border: 1px solid white;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.03);
+      margin: 15px 0;
+      transition: 0.2s ease;
+      position: relative;
+    }
+
+    #product1 .pro:hover {
+      box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    #product1 .pro img {
+      width: 100%;
+      border-radius: 20px;
+    }
+
+    #product1 .pro .des {
+      text-align: start;
+      padding: 10px 0;
+    }
+
+    #product1 .pro .des span {
+      color: black;
+      font-size: 12px;
+    }
+
+    #product1 .pro .des h5 {
+      padding-top: 7px;
+      color: black;
+      font-size: 14px;
+    }
+
+    #product1 .pro .des h4 {
+      padding-top: 7px;
+      color: gold;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  </style>
+  <section id="product1" class="section-p1">
+    <h2>Featured Products</h2>
+    <i class="fa-solid fa-reply" style="color: #000000;cursor: pointer;display: flex; justify-content: space-between; align-items: center;"  onclick="goBack()"></i>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="pro-container">
+        {% for curriculum in curriculums %}
+        <div class="pro">
+         <img src="{{ url_for('static', filename=curriculum.image) }}">
+         <div class="des">
+           <span>{{ curriculum.author }}</span>
+           <h5>{{ curriculum.title }}</h5>
+           <h4>{{ curriculum.price }}</h4>
+         </div>
+       </div>
+       {% endfor %}
+      </div>
+   </section>
+   {% endblock %}

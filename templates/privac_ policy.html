@@ -1,26 +1,171 @@
-# Privacy Policy
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-Your privacy is important to us at [Your Business Name]. We are committed to safeguarding your personal information and want you to understand how we collect, use, and protect your data. Please review our privacy policy to learn more:
+    <!-- Your stylesheet -->
+    <link href="/static/styles.css" rel="stylesheet">
+    <script src="/static/responsive.js"></script>
+    <link rel="icon" href="/static/img/logo.png" type="image/x-icon">
 
-## Information We Collect
+        <title>Books Brightness {% block title %}{% endblock %}</title>
 
-[Explain the types of data you collect, such as contact information, payment details, and browsing history.]
+  </head>
+  <body>
+    <section id="header">
+      <nav class="navbar">
+        <!--Menu when user logged in-->
+        {% if session["user_id"] %}
+        <ul>
+          <li>
+            <a class="button-52" href="/Books_s">Books</a>
+          </li>
+          <li>
+            <a class="button-52" href="/products">School Supplies</a>
+          </li>
+          <li>
+            <a class="button-52" href="/profile">Profile</a>
+          </li>
+          <li>
+            <a class="button-52" href="/cart"> cart </a>
+          </li>
+          <li>
+            <a class="button-52" href="/logout">Log Out</a>
+          </li>
+          <a href="#" id="close">
+            <i class="far fa-times"></i>
+          </a>
+        </ul>
+        <!--homepage-->
+        {% else %}
+        <ul>
+          <li>
+            <a class="button-52" href="/Books_s">Books</a>
+          </li>
+          <!--add school supplies-->
+          <li>
+            <a class="button-52" href="/products">School Supplies</a>
+          </li>
+          <li>
+            <a class="button-52" href="/login">Log In</a>
+          </li>
+        </ul>
+        {% endif %}
+      </nav>
+       <!--responsive-->
+      <div id="mobile">
+        <a class="nav-link" href="/cart">
+        <i class="fa-solid fa-cart-shopping"></i>Cart </a>
+      <i id="bar" class="fas fa-outdent"></i>
+</div>
+    </section>
+    <!--hero section-->
+    <section id="hero"></section>
+<!-- Privacy Policy Section -->
+<section id="privacy-policy" class="section-p1">
+    <div class="container">
+        <h2>Privacy Policy</h2>
 
-## How We Use Your Information
+        <p>Your privacy is important to us at [Your Business Name]. We are committed to safeguarding your personal information and want you to understand how we collect, use, and protect your data. Please review our privacy policy to learn more:</p>
 
-[Detail how collected data is used, like processing orders, improving services, and personalizing experiences.]
+        <div class="info-section">
+            <h3>Information We Collect</h3>
+            <p>[Explain the types of data you collect, such as contact information, payment details, and browsing history.]</p>
+        </div>
 
-## Data Security
+        <div class="info-section">
+            <h3>How We Use Your Information</h3>
+            <p>[Detail how collected data is used, like processing orders, improving services, and personalizing experiences.]</p>
+        </div>
 
-[Explain the measures you take to protect customer data from unauthorized access or breaches.]
+        <div class="info-section">
+            <h3>Data Security</h3>
+            <p>[Explain the measures you take to protect customer data from unauthorized access or breaches.]</p>
+        </div>
 
-## Third-Party Disclosure
+        <div class="info-section">
+            <h3>Third-Party Disclosure</h3>
+            <p>[Clarify whether you share customer data with third parties, such as payment processors or shipping partners.]</p>
+        </div>
 
-[Clarify whether you share customer data with third parties, such as payment processors or shipping partners.]
+        <div class="info-section">
+            <h3>Your Choices</h3>
+            <p>[Inform customers about their rights to access, update, or delete their personal information.]</p>
+        </div>
 
-## Your Choices
+        <p>For a more comprehensive understanding, please review our complete privacy policy. By using our website, you consent to the practices described in this policy.</p>
+    </div>
+</section>
 
-[Inform customers about their rights to access, update, or delete their personal information.]
 
-For a more comprehensive understanding, please review our complete privacy policy. By using our website, you consent to the practices described in this policy.
 
+
+    <!--footer section-->
+    <footer class="section-p1">
+      <!--company information-->
+      <div class="col">
+        <img src="/static/img/logo.png" alt="" class="logo">
+      </div>
+      <div class="col">
+        <h4>Contact</h4>
+        <p>
+          <strong>Address:</strong>
+        </p>
+        <p>
+          <strong>Phone: </strong>
+        </p>
+        <p>
+          <strong>hours: </strong>
+        </p>
+        <!--company socials-->
+        <div>
+          <h4>Follow Us</h4>
+          <div class="icon">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+      </div>
+      <!--terms of service and more-->
+      <div class="col">
+        <h4>Contact</h4>
+        <a href="/templates/about_us.html"> About Us </a>
+        <a href=""> DeliveryInformation </a>
+        <a href=""> Privacy policy </a>
+        <a href=""> Terms& Conditions </a>
+      </div>
+
+      <!--user account-->
+      <div class="col">
+        <h4>My account</h4>
+        <a href="/login"> sign in </a>
+        <a href=""> view cart </a>
+        <a href=""> Whish list </a>
+        <a href=""> Personal Information </a>
+      </div>
+      <!--links to app-->
+      <div class="col install">
+        <h4>Installt</h4>
+        <p>From App Store or Google Play </p>
+        <div class="row">
+          <a href="/comingsoon.html"> <img src="/static/img/app.jpg" alt=""></a>
+            <a href="/comingsoon.html"><img src="/static/img/play.jpg" alt=""></a>
+        </div>
+        <!--payment links-->
+        <p>Secured payment Gateways </p>
+        <img src="/static/img/pay.png" alt="">
+      </div>
+      <!--copywrite-->
+      <div class="copyright"> &copy; 2023 | mylink</div>
+    </footer>
+
+  </body>
+</html>
