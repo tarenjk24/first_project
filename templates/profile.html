@@ -1,11 +1,11 @@
-{% extends "main.html" %}
+{% extends "layout.html" %}
 
 {% block title %}
-Profile
+    Profile
 {% endblock %}
 
 {% block main %}
-<styles>
+<style>
   .center {
     width: 100%;
     height: fit-content;
@@ -25,18 +25,22 @@ Profile
     align-items: center;
     flex-direction: column;
   }
-</styles>
+  .info p{
+    color:black;
+  }
+
+</style>
 <!--Add css to make it look nice -->
 <div class="center">
   <div class="stack-area">
     <div class="left">
+      <div class="info">
   <h2>Personal Information</h2>
   <p><strong>Username:</strong> {{ user_data["username"] }}</p>
   <p><strong>Email:</strong> {{ user_data["mail"] }}</p>
+      </div>
   <!-- Display more user information -->
-    <!-- Add a link to change password and username -->
     <p><a href="/change_password">Change Password</a></p>
-    <!-- Add a link to remove account -->
     <p><a href="/remove">Remove Account</a></p>
   </div></div></div>
 
@@ -64,3 +68,4 @@ Profile
     <p>No order history available.</p>
   {% endif %}
 {% endblock %}
+

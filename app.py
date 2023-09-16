@@ -74,58 +74,8 @@ def login():
         return render_template("login.html")
 
 
-@app.route("/remove", methods=["GET", "POST"])
-@login_required
-def remove():
-    """Delete user account"""
-    if request.method == "POST":
-        # Get user name and password.
-        username = request.form.get("username")
-        password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
-
-        # Validate user input.
-        if not username:
-            return apology("Please provide a username.", 400)
-
-        elif not password:
-            return apology("Please provide a password.", 400)
-
-        elif not confirmation:
-            return apology("Please confirm your password.", 400)
-
-        elif password != confirmation:
-            return apology("Passwords do not match.", 400)
-
-        # Query the database to check if the username is already taken.
-        existing_user = db.execute("SELECT * FROM users WHERE username = ?", username)
-        if not existing_user:
-            return apology("Wrong user", 403)
-        else:
-            # Get user id.
-            user_id_data = db.execute(
-                "SELECT id FROM users WHERE username = ?", (username,)
-            )
-            user_id = user_id_data[0]["id"]
-
-            # Delete user's account and related data from the database.
-            db.execute("DELETE FROM orders WHERE user_id = ?", (user_id,))
-            db.execute("DELETE FROM address WHERE user_id = ?", (user_id,))
-            db.execute("DELETE FROM USERS WHERE username = ?", (username,))
-
-            # Display success message.
-            flash("Account deleted successfully.", "success")
-
-            # Forget any user_id
-            session.clear()
-
-            # Redirect user to login form
-            return redirect("/")
-    else:
-        return render_template("remove.html")
-
-
 @app.route("/logout")
+@login_required
 def logout():
     """Log user out"""
 
@@ -134,7 +84,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -189,6 +138,56 @@ def register():
     else:
         return render_template("register.html")
 
+@app.route("/remove", methods=["GET", "POST"])
+@login_required
+def remove():
+    """Delete user account"""
+    if request.method == "POST":
+        # Get user name and password.
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
+        # Validate user input.
+        if not username:
+            return apology("Please provide a username.", 400)
+
+        elif not password:
+            return apology("Please provide a password.", 400)
+
+        elif not confirmation:
+            return apology("Please confirm your password.", 400)
+
+        elif password != confirmation:
+            return apology("Passwords do not match.", 400)
+
+        # Query the database to check if the username is already taken.
+        existing_user = db.execute("SELECT * FROM users WHERE username = ?", username)
+        if not existing_user:
+            return apology("Wrong user", 403)
+        else:
+            # Get user id.
+            user_id_data = db.execute(
+                "SELECT id FROM users WHERE username = ?", (username,)
+            )
+            user_id = user_id_data[0]["id"]
+
+            # Delete user's account and related data from the database.
+            db.execute("DELETE FROM orders WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM address WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM USERS WHERE username = ?", (username,))
+
+            # Display success message.
+            flash("Account deleted successfully.", "success")
+
+            # Forget any user_id
+            session.clear()
+
+            # Redirect user to login form
+            return redirect("/")
+    else:
+        return render_template("remove.html")
+
 
 @app.route("/change_password", methods=["GET", "POST"])
 @login_required
@@ -217,7 +216,7 @@ def change_password():
         return render_template("change_password.html")
 
 """display Products"""
-@app.route("/catalog")
+@app.route("/")
 def catalog():
     """shop catalog"""
     books = db.execute("SELECT * FROM books")
@@ -225,23 +224,12 @@ def catalog():
     schoolSupplies = db.execute("SELECT * FROM school_supplies")
     return render_template('catalog.html', books=books, schoolSupplies=schoolSupplies)
 
+@app.route("/category", methods=["GET", "POST"])
+def category():
+    """shop catalog"""
+    books = db.execute("SELECT * FROM books")
 
-    """display books"""
-@app.route("/books_s", methods=["GET", "POST"])
-def books_s():
-
-    novels = db.execute("SELECT * FROM books where category = 'novel'")
-    grades = db.execute("SELECT * FROM books where category = 'grade'")
-    curriculums = db.execute("SELECT * FROM books where category = 'curriculum'")
-
-    return render_template('shop_books.html', novels=novels, grades=grades, curriculums=curriculums)
-
-    """display schoolsupplies"""
-@app.route("/supplies", methods=["GET", "POST"])
-def supplies():
-    """display books"""
-    schoolSupplies = db.execute("SELECT * FROM school_supplies")
-    return render_template('school_supplies_shop.html', schoolSupplies=schoolSupplies)
+    return render_template('category.html', books=books)
 
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -257,62 +245,103 @@ def profile():
     return render_template("profile.html", user_data=user_data[0], orders=orders)
 
 
-"""payment and cart"""
 
-@app.route("/cart", methods=["GET", "POST"])
+@app.route("/grades", methods=["GET", "POST"])
+def grades():
+
+    grades = db.execute("SELECT * FROM books where category = 'grade'")
+
+    return render_template('grades.html', grades=grades)
+
+@app.route("/novel", methods=["GET", "POST"])
+def novel():
+
+    novels = db.execute("SELECT * FROM books where category = 'Novel'")
+
+    return render_template('novel.html', novels=novels)
+
+@app.route("/curriculums", methods=["GET", "POST"])
+def curriculums():
+
+    curriculums = db.execute("SELECT * FROM books where category = 'curriculum'")
+
+    return render_template('curriculums.html', curriculums=curriculums)
+
+
+@app.route("/products", methods=["GET", "POST"])
+def products():
+
+    schoolSupplies = db.execute("SELECT * FROM school_supplies")
+    return render_template('products.html', schoolSupplies=schoolSupplies)
+
+"""payment and cart
+# add product
+@app.route('/add_to_cart', methods=['POST'])
 @login_required
-def cart():
-    cart_items = Cart.query.filter_by(user_id=current_user.id).all()
-    product_ids = [item.product_id for item in cart_items]
-    products_in_cart = Product.query.filter(Product.id.in_(product_ids)).all()
-
-    return render_template("cart.html", products=products_in_cart)
-
-
-@app.route("/books", methods=["POST"])
-@login_required
-def books():
-
-    if request.method == "POST":
-        quantity = request.form.get("quantity")
-         product_id = int(request.form.get('product_id'))
-        product = Product.query.get(id)
-        if product:
-            # Insert values to account.
-        db.execute(
-            "INSERT INTO cart (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)",
-            user_id=session["user_id"],
-            quantity=quantity,
-        )
-            flash("Product added to cart.", "success")
-        else:
-            flash("Product not found.", "error")
-    else:
-        # Redirect to a default page if necessary
+def add_product_to_cart():
+    if request.methodc == "POST":
+        product_id = request.form.get('product_id')
+        books_id = request.form.get('books_id')
+        quantity = int(request.form.get('quantity'))
+        user_id = 1  # Replace with the actual user's ID
+        add_to_cart(product_id, books_id, quantity, user_id)
+        # Display success message.
+        flash("Product added to cart successfully.", "success")
         return redirect("/")
-
-
-@app.route("/supplies", methods=["POST"])
-@login_required
-def supplies():
-
-    if request.method == "POST":
-        quantity = request.form.get("quantity")
-         product_id = int(request.form.get('product_id'))
-        product = Product.query.get(id)
-        if product:
-            # Insert values to account.
-        db.execute(
-            "INSERT INTO cart (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)",
-            user_id=session["user_id"],
-            quantity=quantity,
-        )
-            flash("Product added to cart.", "success")
-        else:
-            flash("Product not found.", "error")
     else:
-        # Redirect to a default page if necessary
-        return redirect("/")
+        return render_template("buy.html")
+
+
+# display the cart
+@app.route('/cart')
+@login_required
+def view_cart():
+    user_id = 1  # Replace with the actual user's ID
+    cart_contents = display_cart(user_id)
+    return render_template('cart.html', cart_contents=cart_contents)
+
+
+
+# Function to add a product to the cart
+def add_to_cart(product_id, books_id, quantity, user_id):
+    cart_item = Cart.query.filter_by(
+        product_id=product_id,
+        books_id=books_id,
+        user_id=user_id
+    ).first()
+
+    if cart_item:
+        # If the product is already in the cart, update the quantity
+        cart_item.quantity += quantity
+    else:
+        # Otherwise, create a new cart item
+        cart_item = Cart(
+            product_id=product_id,
+            books_id=books_id,
+            quantity=quantity,
+            user_id=user_id
+        )
+
+    db.session.add(cart_item)
+    db.session.commit()
+
+# Function to display the cart
+def display_cart(user_id):
+    cart_items = Cart.query.filter_by(user_id=user_id).all()
+
+    # Fetch product and book details for each item in the cart
+    cart_details = []
+    for item in cart_items:
+        product = Product.query.get(item.product_id)
+        book = Book.query.get(item.books_id)
+        cart_details.append({
+            "product_name": product.product_name,
+            "book_title": book.book_title,
+            "quantity": item.quantity,
+            "price": product.price
+        })
+
+    return cart_details"""
 
 @app.route("/checkout", methods=["GET", "POST"])
 @login_required
@@ -347,11 +376,12 @@ def checkout():
         flash("Address saved successfully.", "success")
 
         # Redirect the user to the payment page
-        return redirect("/payment")  # Use the route name here
+        return redirect("/payment")
 
     else:
         # Render the checkout template when the request method is GET
         return render_template("checkout.html")
+
 
 
 @app.route("/payment", methods=["GET", "POST"])
@@ -362,20 +392,9 @@ def payment():
 
         if selected_method == 'cash':
             # Perform actions for cash payment
-            return "Thank you for your order! We will deliver soon."
+            flash("Thank you for your order! We will deliver soon.", "success")
         elif selected_method == 'other':
-            # Perform actions for other payment methods
-            # maybe not
+            flash("Sorry! online payment will be implemented in a future version of books brightness.", "error")
 
-
-            return "Please proceed to the payment gateway."
-
-    return render_template('payment_form.html')
-
-
-
-""" not done possible routes to add : admin route/ promotions route / bonus piont route
-missing routes product route
-about template
-contact us template"""
-
+    else:
+        return render_template('payment.html')

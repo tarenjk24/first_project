@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Your stylesheet -->
     <link href="/static/styles.css" rel="stylesheet">
     <script src="/static/responsive.js"></script>
@@ -16,100 +17,78 @@
         display: none;
       }
     </style>
-        <title>Books Brightness {% block title %}{% endblock %}</title>
-
+    <title>Books Brightness {% block title %}{% endblock %}</title>
   </head>
   <body>
-    <section id="header">
-      <nav class="navbar">
-        <!--Menu when user logged in-->
-        {% if session["user_id"] %}
-        <ul>
+    <div id="bar">
+      <div class="navbar">
+        <!--Menu when user logged in--> {% if session["user_id"] %} <ul>
           <li>
-            <a class="button-52" href="/catalog">Catalog</a>
+            <a class="button-52" href="/">Home</a>
           </li>
           <li>
-            <a class="button-52" href="/Books">Books</a>
+            <a class="button-52" href="/category">Books</a>
           </li>
           <li>
-            <a class="button-52" href="/supplies">School Supplies</a>
+            <a class="button-52" href="/products">Products</a>
           </li>
           <li>
             <a class="button-52" href="/profile">Profile</a>
           </li>
           <li>
-            <a class="button-52" href="/cart"> cart </a>
+            <a class="button-52" href="/cart">cart</a>
           </li>
           <li>
             <a class="button-52" href="/logout">Log Out</a>
           </li>
-          <a href="#" id="close">
-            <i class="far fa-times"></i>
-          </a>
         </ul>
-        <!--homepage-->
-        {% else %}
-        <ul>
+        <!--homepage--> {% else %} <ul>
           <li>
-            <a class="button-52" href="/catalog">Catalog</a>
+            <a class="button-52" href="/">Home</a>
           </li>
-          <!--add books categories-->
           <li>
-            <a class="button-52" href="/Books">Books</a>
+            <a class="button-52" href="/category">Books</a>
           </li>
           <!--add school supplies-->
           <li>
-            <a class="button-52" href="/supplies">School Supplies</a>
+            <a class="button-52" href="/products">Products</a>
           </li>
           <li>
             <a class="button-52" href="/login">Log In</a>
           </li>
-        </ul>
-        {% endif %}
-      </nav>
-       <!--responsive-->
-      <div id="mobile">
-        <a class="nav-link" href="/cart">
-        <i class="fa-solid fa-cart-shopping"></i>Cart </a>
-      <i id="bar" class="fas fa-outdent"></i>
-    </section>
-
-    <!--hero section-->
-    <section id="hero"></section>
-    {% if request.path == '/' %}
+        </ul> {% endif %}
+      </div>
+    </div>
+    <div id="hero"></div> {% if request.path == '/' %}
     <!--features section-->
-    <section >
+    <div>
       <div class="center">
         <div class="stack-area">
           <div class="left">
-            <div class="title">Discover Our Library Treasures</div>
+            <div class="title"> Discover Our Library Treasures </div>
             <div class="sub-title">
-              <p>
-                Dive into a world of literary wonders! At our library shop, we offer a handpicked
-                collection of books that will transport you to new realms of imagination and knowledge.
-                Explore our selection to find captivating stories and insightful reads for all ages.
-              </p><br />
-              <button><a class="nav-link" href="/catalog">
-                See More Details</a></button>
+              <p>Dive into a world of literary wonders! At our library shop, we offer a handpicked collection of books that will transport you to new realms of imagination and knowledge. Explore our selection to find captivating stories and insightful reads for all ages.</p>
+              <br>
+              <button> See More Detail </button>
             </div>
           </div>
           <div class="right">
             <div class="cards">
               <div class="card">
-                <div class="sub">Easy Book Access</div>
-                <div class="content">Discover and acquire books with just a click</div>
+                <div class="sub"> Easy Book Access </div>
+                <div class="content"> Discover and acquire books with just a click </div>
               </div>
               <div class="card">
-                <div class="sub">Enhance Efficiencyy</div>
-                <div class="content">Accomplish tasks more quickly and effectively</div>
+                <div class="sub"> Enhance Efficiencyy </div>
+                <div class="content"> Accomplish tasks more quickly and effectively </div>
               </div>
               <div class="card">
-                <div class="sub">Seamless Learning</div>
-                <div class="content">Immerse yourself in learning with books at your fingertips</div>
+                <div class="sub"> Seamless Learning </div>
+                <div class="content"> Immerse yourself in learning with books at your fingertips </div>
               </div>
               <div class="card">
-                <div class="sub">24/7 Support</div>
-                <div class="content">We're here to assist you anytime you need</div>
+                <div class="sub"> 24/7 Support </div>
+                <div class="content"> We're here to assist you anytime you need </div>
               </div>
             </div>
           </div>
@@ -130,12 +109,9 @@
             }
           });
         }
-
         rotateCards();
-
         window.addEventListener("scroll", () => {
-          let proportion =
-            stackArea.getBoundingClientRect().top / window.innerHeight;
+          let proportion = stackArea.getBoundingClientRect().top / window.innerHeight;
           if (proportion <= 0) {
             let n = cards.length;
             let index = Math.ceil((proportion * n) / 2);
@@ -151,23 +127,27 @@
           }
         });
       </script>
-    </section>
-    <!--products section-->
-    <section id="features" class="section-p1">
-        <div class="center">
-          <div class="stack-area">
-            <div class="left">
-              <div class="title">Our products</div>
-        <p>Explore our shop now! </p>
+    </div>
+    <div id="features" class="section-p1">
+      <div class="center">
+        <div class="stack-area">
+          <div class="left">
+            <div class="title"> Our products </div>
+            <div class="sub-title">
+              <p>Explore our shop now!</p>
+            </div>
+          </div>
+          <div class="right">
+            <div class="content section">
+              <img class="mySlides" src="/static/img/features/brands.png" alt="brands">
+              <img class="mySlides" src="/static/img/features/novels%20(1).png" alt="novels%20(1)">
+              <img class="mySlides" src="/static/img/features/novels.png" alt="novels">
+              <img class="mySlides" src="/static/img/features/scholaire%20books.png" alt="scholaire%20books">
+              <img class="mySlides" src="/static/img/features/scholaire%20books.png" alt="scholaire%20books">
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="right">
-      <div class="content section">
-        <img class="mySlides" src="/static/img/features/brands.png">
-        <img class="mySlides" src="/static/img/features/novels (1).png">
-        <img class="mySlides" src="/static/img/features/novels.png">
-        <img class="mySlides" src="/static/img/features/scholaire books.png">
-        <img class="mySlides" src="/static/img/features/scholaire books.png">
-    </div> </div> </div> </div>
       <script>
         var myIndex = 0;
         carousel();
@@ -186,18 +166,13 @@
           setTimeout(carousel, 2000); // Change image every 2 seconds
         }
       </script>
-    </section>
-    {% endif %}
-    {% if get_flashed_messages() %}
-    <section id="header">
+    </div> {% endif %} {% if get_flashed_messages() %} <div id="header">
       <div class="alert alert-primary mb-0 text-center" role="alert">
-          {{ get_flashed_messages() | join(" ") }}
+        {{ get_flashed_messages() | join(" ") }}
       </div>
-    </section>
-    {% endif %}
+    </div> {% endif %}
     <!--the content section-->
-    <section class="main"> {% block main %}{% endblock %} </section>
-    {% if request.path == '/' %}
+    <div class="main"> {% block main %}{% endblock %} </div>
     <!--newsletter section-->
     <section id="newsletter">
       <div class="newstext">
@@ -209,11 +184,12 @@
         <button class="normal">Sign Up</button>
       </div>
     </section>
-    <!--footer section-->
     <footer class="section-p1">
       <!--company information-->
       <div class="col">
-        <img src="/static/img/logo.png" class="logo">
+        <a href="/">
+          <img src="/static/img/logo.png" class="logo" alt="logo">
+        </a>
       </div>
       <div class="col">
         <h4>Contact</h4>
@@ -221,55 +197,52 @@
           <strong>Address:</strong>
         </p>
         <p>
-          <strong>Phone: </strong>
+          <strong>Phone:</strong>
         </p>
         <p>
-          <strong>hours: </strong>
+          <strong>hours:</strong>
         </p>
         <!--company socials-->
         <div>
           <h4>Follow Us</h4>
           <div class="icon">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#"></a>
+            <a href="#"></a>
+            <a href="#"></a>
+            <a href="#"></a>
           </div>
         </div>
       </div>
       <!--terms of service and more-->
       <div class="col">
         <h4>Contact</h4>
-        <a href="about_us.html"> About Us </a>
-        <a href="delivery_information.html"> DeliveryInformation </a>
-        <a href="privac_ policy.html"> Privacy policy </a>
-        <a href="terms_conditions.html"> Terms& Conditions </a>
+        <a href="aboutus.html">About Us</a>
+        <a href="/deliveryinformation.html">Delivery Information</a>
+        <a href="/privacypolicy.html">Privacy Policy</a>
+        <a href="/termsconditions.html">Terms & Conditions</a>
       </div>
-
       <!--user account-->
       <div class="col">
-        <h4>My account</h4>
-        <a href="/login"> sign in </a>
-        <a href="/cart"> view cart </a>
-        <a href="checkout"> Check Out </a>
-        <a href="userinfo.html"> Personal Information </a>
+        <h4>My account</h4> {% if session["user_id"] %} <a href="">view cart</a>
+        <a href="">Whish list</a>
+        <a href="/profile">User Info</a> {% else %} <a href="/login">Log In</a> {% endif %}
       </div>
       <!--links to app-->
       <div class="col install">
         <h4>Installt</h4>
-        <p>From App Store or Google Play </p>
+        <p>From App Store or Google Play</p>
         <div class="row">
-          <a href="comingsoon.html"> <img src="/static/img/app.jpg"></a>
-            <a href="comingsoon.html"><img src="/static/img/play.jpg"></a>
+          <a href="/comingsoon.html">
+            <img src="/static/img/app.jpg" alt="app">
+            <img src="/static/img/play.jpg" alt="play">
+          </a>
         </div>
         <!--payment links-->
-        <p>Secured payment Gateways </p>
-        <img src="/static/img/pay.png">
+        <p>Secured payment Gateways</p>
+        <img src="/static/img/pay.png" alt="pay">
       </div>
       <!--copywrite-->
-      <div class="copyright"> &copy; 2023 | mylink</div>
+      <div class="copyright"> © 2023 | mylink </div>
     </footer>
-    {% endif %}
-
   </body>
 </html>

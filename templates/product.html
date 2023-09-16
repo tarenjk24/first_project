@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ books.name }}
+ {{ schoolsupplies.name }}
 {% endblock %}
 
 {% block main %}
 <style>
-/* CSS for Product Template */
+  /* CSS for Product Template */
 .product {
   display: flex;
   justify-content: center;
@@ -66,17 +66,25 @@
 .add-to-cart:hover {
   background-color: #0056b3;
 }
-</style>
+
+  </style>
   <div class="product">
     <div class="product-details">
-      <h2>{{ books.name }}</h2>
-      <p class="product-description">{{ books.description }}</p>
-      <p class="product-price">Price: ${{ books.price }}</p>
+      <h2>{{ schoolsupplies.name }}</h2>
+      <p class="product-description">{{ schoolsupplies.description }}</p>
+      <p class="product-price">Price: ${{ schoolsupplies.price }}</p>
       <!-- Add more product details as needed -->
-      <form action="/books" method="post" class="product-form">
+      <form action="/products" method="post" class="product-form">
         <div class="product-quantity">
           <label for="quantity_wanted">Quantity</label>
-          <input type="number" name="qty" id="quantity_wanted" value="1" min="1" aria-label="Quantity">
+          <input
+            type="number"
+            name="qty"
+            id="quantity_wanted"
+            value="1"
+            min="1"
+            aria-label="Quantity"
+          >
         </div>
         <input type="hidden" name="product_id" value="{{ schoolsupplies.id }}">
         <button class="btn btn-primary add-to-cart" data-button-action="add-to-cart" type="submit">

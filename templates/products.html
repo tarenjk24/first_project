@@ -1,4 +1,4 @@
-{% extends "main.html" %}
+{% extends "layout.html" %}
 
 {% block title %}
     supplies
@@ -54,13 +54,19 @@
   font-weight: 700;
 }
 </style>
-</section>
 <section id="product1" class="section-p1">
   <h2>Featured Products</h2>
+  <i class="fa-solid fa-reply" style="color: #000000;cursor: pointer;display: flex; justify-content: space-between; align-items: center;"  onclick="goBack()"></i>
+
+  <script>
+      function goBack() {
+          window.history.back();
+      }
+  </script>
   <div class="pro-container">
     {% for schoolSupply in schoolSupplies %}
     <div class="pro">
-      <img src="/static/img/products/{{ schoolSupply.image }}">
+      <img src={{url_for('static', filename='img/' + product.image_l)}}>
       <div class="des">
         <span>{{ schoolSupply.brand }}</span>
         <h5>{{ schoolSupply.name }}</h5>

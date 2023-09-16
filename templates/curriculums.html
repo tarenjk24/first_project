@@ -74,10 +74,11 @@
     <div class="pro-container">
         {% for curriculum in curriculums %}
         <div class="pro">
-         <img src="{{ url_for('static', filename=curriculum.image) }}">
+          <a href="/books.html">
+         <img src="/static/img/products/curriculum.png" alt="books">
          <div class="des">
            <span>{{ curriculum.author }}</span>
-           <h5>{{ curriculum.title }}</h5>
+           <h5>{{ curriculum.title }}</h5></a>
            <h4>{{ curriculum.price }}</h4>
          </div>
        </div>

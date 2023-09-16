@@ -1,29 +1,97 @@
-{% extends "main.html" %}
+{% extends "layout.html" %}
 
 {% block title %}
     Cart
 {% endblock %}
 
 {% block main %}
-<h2>Your Cart</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Product Name</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in products %}
-      <tr>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<a class="button-52" href="/checkout">Check Out</a>
-{% if not product %}
-<p>add items</p>
-{% endif %}
+<style>
+/* CSS for Cart Template */
+.cart-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table th {
+    background-color: #f5f5f5;
+    text-align: left;
+}
+
+.checkout-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.checkout-button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+</style>
+<div class="cart-container">
+    <h2>Your Cart</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>${{ product.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="checkout-button" href="/checkout">Proceed to Checkout</a>
+    {% if not products %}
+    <p>Your cart is empty. <a href="/">Browse Products</a></p>
+    {% endif %}
+</div>
 {% endblock %}
