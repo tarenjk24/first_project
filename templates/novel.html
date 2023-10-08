@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    novel
+    products
 {% endblock %}
 
 {% block main %}
@@ -72,13 +72,15 @@
         }
     </script>
     <div class="pro-container">
-      {% for novel in novels %}
+      {% for product in products %}
        <div class="pro">
-        <img src="{{ url_for('static', filename=novel.image) }}">
+        <img src="{{ product.cover }}" alt="{{ product.title }}">
         <div class="des">
-          <span>{{ novel.author }}</span>
-          <h5>{{ novel.title }}</h5>
-          <h4>{{ novel.price }}</h4>
+          <span>{{ product.author }}</span>
+          <h5>{{ product.title }}</h5>
+          <h4>{{ product.price }}</h4>
+          <a href="/addtocart"><span> DETAILS </span></a>
+
         </div>
       </div>
        {% endfor %}

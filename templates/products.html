@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    supplies
+    products
 {% endblock %}
 
 {% block main %}
@@ -64,13 +64,14 @@
       }
   </script>
   <div class="pro-container">
-    {% for schoolSupply in schoolSupplies %}
+    {% for product in products %}
     <div class="pro">
-      <img src={{url_for('static', filename='img/' + product.image_l)}}>
+      <img src="{{ product.cover }}" alt="{{ product.name }}">
       <div class="des">
-        <span>{{ schoolSupply.brand }}</span>
-        <h5>{{ schoolSupply.name }}</h5>
-        <h4>{{ schoolSupply.price }}</h4>
+        <span>{{ product.brand }}</span>
+        <h5>{{ product.name }}</h5>
+        <h4>{{ product.price }}</h4>
+        <a href="/addtocart"><span> DETAILS </span></a>
       </div>
     </div>
     {% endfor %}

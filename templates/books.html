@@ -1,87 +1,80 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ books.name }}
+    books
 {% endblock %}
 
 {% block main %}
 <style>
-/* CSS for Product Template */
-.product {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.product-details {
+#product1{
   text-align: center;
 }
-
-.product h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.product-description {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.product-price {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.product-form {
+#product1 .pro-container{
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  flex-wrap: wrap;
 }
-
-.product-quantity {
-  margin-bottom: 20px;
-}
-
-.product-quantity label {
-  font-size: 16px;
-}
-
-.product-quantity input[type="number"] {
-  width: 60px;
-  padding: 5px;
-  font-size: 16px;
-}
-
-.add-to-cart {
-  background-color: #007bff;
-  color: #fff;
-  font-size: 18px;
-  padding: 10px 20px;
-  border: none;
+#product1 .pro{
+  width: 23%;
+  min-width: 250px;
+  padding: 10px 12px;
+  border: 1px solid white;
+  border-radius: 25px;
   cursor: pointer;
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.03);
+  margin: 15px 0;
+  transition: 0.2s ease ;
+  position: relative;
 }
-
-.add-to-cart:hover {
-  background-color: #0056b3;
+#product1 .pro:hover{
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.6);
+}
+#product1 .pro img{
+  width: 100%;
+  border-radius: 20px;
+}
+#product1 .pro .des{
+  text-align: start;
+  padding: 10px 0;
+}
+#product1 .pro .des span{
+  color: black;
+  font-size: 12px;
+}
+#product1 .pro .des h5{
+  padding-top: 7px;
+  color: black;
+  font-size: 14px;
+}
+#product1 .pro .des h4{
+  padding-top: 7px;
+  color: gold;
+  font-size: 15px;
+  font-weight: 700;
 }
 </style>
-  <div class="product">
-    <div class="product-details">
-      <h2>{{ books.name }}</h2>
-      <p class="product-description">{{ books.description }}</p>
-      <p class="product-price">Price: ${{ books.price }}</p>
-      <!-- Add more product details as needed -->
-      <form action="/books" method="post" class="product-form">
-        <div class="product-quantity">
-          <label for="quantity_wanted">Quantity</label>
-          <input type="number" name="qty" id="quantity_wanted" value="1" min="1" aria-label="Quantity">
-        </div>
-        <input type="hidden" name="product_id" value="{{ schoolsupplies.id }}">
-        <button class="btn btn-primary add-to-cart" data-button-action="add-to-cart" type="submit">
-          <i class="material-icons shopping-cart">&#xE547;</i> Add to Cart </button>
-      </form>
+<section id="product1" class="section-p1">
+  <h2>Featured books</h2>
+  <i class="fa-solid fa-reply" style="color: #000000;cursor: pointer;display: flex; justify-content: space-between; align-items: center;"  onclick="goBack()"></i>
+
+  <script>
+      function goBack() {
+          window.history.back();
+      }
+  </script>
+  <div class="pro-container">
+    {% for book in books %}
+    <div class="pro">
+      <img src="{{ book.cover }}" alt="{{ book.name }}">
+      <div class="des">
+        <span>{{ book.category }}</span>
+        <h5>{{ book.name }}</h5>
+        <h4>{{ book.price }}</h4>
+        <a href="/addtocart"><span> DETAILS </span></a>
+      </div>
     </div>
+    {% endfor %}
   </div>
+</section>
 {% endblock %}

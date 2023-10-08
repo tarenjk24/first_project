@@ -22,12 +22,14 @@
   <body>
     <div id="bar">
       <div class="navbar">
-        <!--Menu when user logged in--> {% if session["user_id"] %} <ul>
+        <!--Menu when user logged in-->
+         {% if session["user_id"] %}
+          <ul>
           <li>
             <a class="button-52" href="/">Home</a>
           </li>
           <li>
-            <a class="button-52" href="/category">Books</a>
+            <a class="button-52" href="/books">Books</a>
           </li>
           <li>
             <a class="button-52" href="/products">Products</a>
@@ -47,19 +49,24 @@
             <a class="button-52" href="/">Home</a>
           </li>
           <li>
-            <a class="button-52" href="/category">Books</a>
+            <a class="button-52" href="/books">Books</a>
           </li>
           <!--add school supplies-->
           <li>
             <a class="button-52" href="/products">Products</a>
           </li>
           <li>
+            <a class="button-52" href="/brands">Brands</a>
+          </li>
+          <li>
             <a class="button-52" href="/login">Log In</a>
           </li>
-        </ul> {% endif %}
+        </ul>
+        {% endif %}
       </div>
     </div>
-    <div id="hero"></div> {% if request.path == '/' %}
+    <div id="hero"></div>
+    {% if request.path == '/' %}
     <!--features section-->
     <div>
       <div class="center">
@@ -69,7 +76,6 @@
             <div class="sub-title">
               <p>Dive into a world of literary wonders! At our library shop, we offer a handpicked collection of books that will transport you to new realms of imagination and knowledge. Explore our selection to find captivating stories and insightful reads for all ages.</p>
               <br>
-              <button> See More Detail </button>
             </div>
           </div>
           <div class="right">
@@ -166,11 +172,15 @@
           setTimeout(carousel, 2000); // Change image every 2 seconds
         }
       </script>
-    </div> {% endif %} {% if get_flashed_messages() %} <div id="header">
+    </div>
+    {% endif %}
+    {% if get_flashed_messages() %}
+     <div id="header">
       <div class="alert alert-primary mb-0 text-center" role="alert">
         {{ get_flashed_messages() | join(" ") }}
       </div>
-    </div> {% endif %}
+    </div>
+    {% endif %}
     <!--the content section-->
     <div class="main"> {% block main %}{% endblock %} </div>
     <!--newsletter section-->
@@ -216,23 +226,28 @@
       <!--terms of service and more-->
       <div class="col">
         <h4>Contact</h4>
-        <a href="aboutus.html">About Us</a>
-        <a href="/deliveryinformation.html">Delivery Information</a>
-        <a href="/privacypolicy.html">Privacy Policy</a>
-        <a href="/termsconditions.html">Terms & Conditions</a>
-      </div>
+        <a href="{{ url_for('about_us') }}">About Us</a>
+        <a href="{{ url_for('delivery_information') }}">Delivery Information</a>
+        <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+        <a href="{{ url_for('terms_conditions') }}">Terms & Conditions</a>
+              </div>
       <!--user account-->
       <div class="col">
-        <h4>My account</h4> {% if session["user_id"] %} <a href="">view cart</a>
+        <h4>My account</h4>
+        {% if session["user_id"] %}
+        <a href="">view cart</a>
         <a href="">Whish list</a>
-        <a href="/profile">User Info</a> {% else %} <a href="/login">Log In</a> {% endif %}
+        <a href="/profile">User Info</a>
+         {% else %}
+          <a href="/login">Log In</a>
+          {% endif %}
       </div>
       <!--links to app-->
       <div class="col install">
         <h4>Installt</h4>
         <p>From App Store or Google Play</p>
         <div class="row">
-          <a href="/comingsoon.html">
+            <a href="{{ url_for('comingsoon') }}">
             <img src="/static/img/app.jpg" alt="app">
             <img src="/static/img/play.jpg" alt="play">
           </a>

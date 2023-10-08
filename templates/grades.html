@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    grades
+   products
 {% endblock %}
 
 {% block main %}
@@ -72,13 +72,15 @@
         }
     </script>
     <div class="pro-container">
-      {% for grade in grades %}
+      {% for product in products %}
       <div class="pro">
-        <img src="/static/img/products/grades.png" alt="books">
-        <div class="des">
-          <span>{{ grade.author }}</span>
-          <h5>{{ grade.title }}</h5>
-          <h4>{{ grade.price }}</h4>
+        <img src="{{ product.cover }}" alt="{{ product.title }}">
+            <div class="des">
+          <span>{{ product.author }}</span>
+          <h5>{{ product.title }}</h5>
+          <h4>{{ product.price }}</h4>
+          <a href="/addtocart"><span> DETAILS </span></a>
+
         </div>
       </div>
       {% endfor %}

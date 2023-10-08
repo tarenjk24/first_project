@@ -15,8 +15,8 @@
     <title>Books Brightness {% block title %}{% endblock %}</title>
   </head>
   <body>
-    <div id="header">
-      <div class="navbar">
+    <section id="header">
+      <nav class="navbar">
         <!--Menu when user logged in--> {% if session["user_id"] %} <ul>
           <li>
             <a class="button-52" href="/Books_s">Books</a>
@@ -33,6 +33,7 @@
           <li>
             <a class="button-52" href="/logout">Log Out</a>
           </li>
+
         </ul>
         <!--homepage--> {% else %} <ul>
           <li>
@@ -46,16 +47,17 @@
             <a class="button-52" href="/login">Log In</a>
           </li>
         </ul> {% endif %}
-      </div>
-      <!--responsive-->
-      <div id="mobile">
-        <a class="nav-link" href="/cart">
-          <i class="fa-solid fa-cart-shopping"></i>Cart </a>
-        <i id="bar" class="fas fa-outdent"></i>
-      </div>
+      </nav>
+
+    <!--responsive-->
+    <div id="mobile">
+      <a class="nav-link" href="/cart">
+        <i class="fa-solid fa-cart-shopping"></i>Cart </a>
+      <i id="bar" class="fas fa-outdent"></i>
     </div>
-    <!--hero section-->
-    <div id="hero"></div>
+</section>
+<!--hero section-->
+<section id="hero"></section>
     <!-- Terms and Conditions Section -->
     <section id="terms-and-conditions" class="section-p1">
       <div class="container">
