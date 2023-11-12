@@ -1,97 +1,64 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Cart
+  Cart
 {% endblock %}
 
 {% block main %}
-<style>
-/* CSS for Cart Template */
-.cart-container {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-}
+<!-- Link to external CSS file for styling the page -->
+<link href="/static/profile.css" rel="stylesheet">
 
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
+<!-- Centered container for the cart information -->
+<div class="center">
+    <div class="area">
+        <div class="left">
+            <div class="section">
+                <div class="info">
+                    <!-- Heading for the cart section -->
+                    <h2 class="text-center my-4">Your Cart</h2>
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
+                    <!-- Responsive table to display the cart contents -->
+                    <div class="table-responsive">
+                        <table class="table table-grey table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cover</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Availability</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if not rows %}
+                                <tr>
+                                    <td colspan="6">Your cart is empty.</td>
+                                </tr>
+                                {% else %}
+                                {% for row in rows %}
+                                <tr>
+                                    <td> <img src="{{ row.cover }}" alt="{{ row.title }}"></td>
+                                    <td>{{ row.name }}</td>
+                                    <td>{{ row.availability }}</td>
+                                    <td>{{ row.quantity }}</td>
+                                    <td>{{ row.price }}</td>
+                                    <td>{{ (row.price * row.quantity) }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
 
-.table th, .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.table th {
-    background-color: #f5f5f5;
-    text-align: left;
-}
-
-.checkout-button {
-    display: inline-block;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 18px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.checkout-button:hover {
-    background-color: #0056b3;
-}
-
-p {
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-p a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-p a:hover {
-    text-decoration: underline;
-}
-</style>
-<div class="cart-container">
-    <h2>Your Cart</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>${{ product.price }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a class="checkout-button" href="/checkout">Proceed to Checkout</a>
-    {% if not products %}
-    <p>Your cart is empty. <a href="/">Browse Products</a></p>
-    {% endif %}
+                    <!-- Link to navigate back to the products page -->
+                    {% if rows %}
+                    <a href="/payment">Check Out</a>
+                    {% endif %}
+                    <a href="/">Back to Catalog</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

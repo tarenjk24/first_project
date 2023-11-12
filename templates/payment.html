@@ -5,68 +5,35 @@
 {% endblock %}
 
 {% block main %}
-<style>
-/* CSS for Payment Form */
-.payment-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
+<!-- Link to external CSS file -->
+<link href="/static/form.css" rel="stylesheet">
 
-.payment-methods {
-  text-align: center;
-  background-color: #f7f7f7;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 400px;
-  margin: 0 auto;
-}
+<!-- Stack area and center div -->
+<div class="stack-area">
+    <div class="center" id="div">
+        <!-- Payment form section -->
+        <div class="payment-form">
+            <form action="/payment" method="post" class="payment-form">
 
-.payment-methods h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
+            <span class="section">
+                <!-- Head section for payment method selection -->
 
-.payment-option {
-  margin-bottom: 10px;
-}
+                <div class="head">Select a Payment Method:</div>
+                <span class="inputf">
+                    <!-- Payment option for cash on delivery -->
+                    <div class="payment-option">
+                        <a href="{{ url_for('checkout') }}"> <label for="cash" class="cash">Pay Cash on Delivery</label></a>
+                    </div>
 
-.payment-option input[type="radio"] {
-  margin-right: 10px;
-}
+                    <!-- Payment option for other payment methods -->
+                    <div class="payment-option">
+                        <a href="{{ url_for('comingsoon') }}"> <label for="other" class="cash">Pay by Other Methods</label></a>
+                    </div>
 
-.submit-button {
-  background-color: #007bff;
-  color: #fff;
-  font-size: 18px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
-}
-
-    </style>
-<form action="/payment" method="post" class="payment-form">
-    <div class="payment-methods">
-        <h2>Select a Payment Method:</h2>
-        <div class="payment-option">
-            <input type="radio" id="cash" name="method_paying" value="cash">
-            <label for="cash">Pay Cash on Delivery</label>
-        </div>
-        <div class="payment-option">
-            <input type="radio" id="other" name="method_paying" value="other">
-            <label for="other">Pay by Other Methods</label>
-        </div>
+                </span>
+            </div>
+        </form>
     </div>
-    <button class="btn btn-primary submit-button" type="submit">Place Order</button>
-</form>
+</div>
 {% endblock %}
 

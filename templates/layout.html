@@ -3,104 +3,128 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
+      <!-- Bootstrap CSS and Font Awesome CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Your stylesheet -->
     <link href="/static/styles.css" rel="stylesheet">
-    <script src="/static/responsive.js"></script>
     <link rel="icon" href="/static/img/logo.png" type="image/x-icon">
+
+    <title>Books Brightness {% block title %}{% endblock %}</title>
     <style>
       .mySlides {
         display: none;
       }
     </style>
-    <title>Books Brightness {% block title %}{% endblock %}</title>
   </head>
   <body>
-    <div id="bar">
-      <div class="navbar">
-        <!--Menu when user logged in-->
-         {% if session["user_id"] %}
-          <ul>
-          <li>
-            <a class="button-52" href="/">Home</a>
-          </li>
-          <li>
-            <a class="button-52" href="/books">Books</a>
-          </li>
-          <li>
-            <a class="button-52" href="/products">Products</a>
-          </li>
-          <li>
-            <a class="button-52" href="/profile">Profile</a>
-          </li>
-          <li>
-            <a class="button-52" href="/cart">cart</a>
-          </li>
-          <li>
-            <a class="button-52" href="/logout">Log Out</a>
-          </li>
-        </ul>
-        <!--homepage--> {% else %} <ul>
-          <li>
-            <a class="button-52" href="/">Home</a>
-          </li>
-          <li>
-            <a class="button-52" href="/books">Books</a>
-          </li>
-          <!--add school supplies-->
-          <li>
-            <a class="button-52" href="/products">Products</a>
-          </li>
-          <li>
-            <a class="button-52" href="/brands">Brands</a>
-          </li>
-          <li>
-            <a class="button-52" href="/login">Log In</a>
-          </li>
-        </ul>
-        {% endif %}
-      </div>
+
+    {% if get_flashed_messages() %}
+    <!-- Flash messages -->
+    <div id="header">
+     <div class="alert alert-primary mb-0 text-center" role="alert">
+       {{ get_flashed_messages() | join(" ") }}
+     </div>
+   </div>
+   {% endif %}
+
+<!-- Top Navigation Bar -->
+<div class="bar">
+  <div class="navbar" id="navbar">
+    <!-- Navigation items for logged-in users -->
+    {% if session["user_id"] %}
+    <ul >
+      <li>
+        <a class="button-52" href="/">Home</a>
+      </li>
+      <li>
+        <a class="button-52" href="/books">Books</a>
+      </li>
+      <li>
+        <a class="button-52" href="/products">Products</a>
+      </li>
+      <li>
+        <a class="button-52" href="/profile">Profile</a>
+      </li>
+        <li>
+          <a class="button-52" href="/logout">Log Out</a>
+        </li>
+        <li>
+          <a c href="/cart"><i class="fa-solid fa-cart-shopping fa-beat" style="color: #1f1f1f;"></i></a>
+        </li>
+    </ul>
+
+
+
+    <!-- Navigation items for non-logged-in users -->
+    {% else %}
+    <ul>
+      <li>
+        <a class="button-52" href="/">Home</a>
+      </li>
+      <li>
+        <a class="button-52" href="/books">Books</a>
+      </li>
+      <li>
+        <a class="button-52" href="/products">Products</a>
+      </li>
+
+      <li>
+        <a class="button-52" href="/login">Log In</a>
+      </li>
+
+    </ul>
+    {% endif %}
+    <div id="mobile">
+      <i id="barr" class="fa-sharp fa-solid fa-bars-staggered fa-flip" style="color: #000000;"></i>
     </div>
+  </div>
+
+  </div>
+
+    <!-- Hero Section -->
     <div id="hero"></div>
     {% if request.path == '/' %}
-    <!--features section-->
+    <!--Featured functions section-->
     <div>
       <div class="center">
         <div class="stack-area">
           <div class="left">
-            <div class="title"> Discover Our Library Treasures </div>
+            <div class="title">  Discover
+          Our Library
+             Treasures
+           </div>
+
             <div class="sub-title">
               <p>Dive into a world of literary wonders! At our library shop, we offer a handpicked collection of books that will transport you to new realms of imagination and knowledge. Explore our selection to find captivating stories and insightful reads for all ages.</p>
               <br>
+
             </div>
+
           </div>
+          <div class="vertical-line"></div>
           <div class="right">
+             <!-- Content for features section -->
             <div class="cards">
               <div class="card">
                 <div class="sub"> Easy Book Access </div>
-                <div class="content"> Discover and acquire books with just a click </div>
               </div>
               <div class="card">
-                <div class="sub"> Enhance Efficiencyy </div>
-                <div class="content"> Accomplish tasks more quickly and effectively </div>
+                <div class="sub"> Enhance Efficiency </div>
               </div>
               <div class="card">
                 <div class="sub"> Seamless Learning </div>
-                <div class="content"> Immerse yourself in learning with books at your fingertips </div>
               </div>
               <div class="card">
                 <div class="sub"> 24/7 Support </div>
-                <div class="content"> We're here to assist you anytime you need </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <script>
+        // JavaScript code for rotating cards
         let cards = document.querySelectorAll(".card");
         let stackArea = document.querySelector(".stack-area");
 
@@ -133,29 +157,37 @@
           }
         });
       </script>
-    </div>
-    <div id="features" class="section-p1">
+</div>
+
+
+
+     <!-- Featured products  -->
+    <div>
       <div class="center">
         <div class="stack-area">
           <div class="left">
-            <div class="title"> Our products </div>
-            <div class="sub-title">
-              <p>Explore our shop now!</p>
-            </div>
+            <div class="title"> Explore our shop now!
+           </div>
+
           </div>
+          <div class="vertical-line"></div>
           <div class="right">
-            <div class="content section">
+             <!-- Content for features section -->
+            <div class="cards">
+              <div class="slides">
               <img class="mySlides" src="/static/img/features/brands.png" alt="brands">
               <img class="mySlides" src="/static/img/features/novels%20(1).png" alt="novels%20(1)">
               <img class="mySlides" src="/static/img/features/novels.png" alt="novels">
               <img class="mySlides" src="/static/img/features/scholaire%20books.png" alt="scholaire%20books">
               <img class="mySlides" src="/static/img/features/scholaire%20books.png" alt="scholaire%20books">
             </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <script>
-        var myIndex = 0;
+ var myIndex = 0;
         carousel();
 
         function carousel() {
@@ -169,39 +201,62 @@
             myIndex = 1
           }
           x[myIndex - 1].style.display = "block";
-          setTimeout(carousel, 2000); // Change image every 2 seconds
+          setTimeout(carousel, 5000); // Change image every 2 seconds
         }
-      </script>
-    </div>
+              </script>
+</div>
+
+
+
     {% endif %}
-    {% if get_flashed_messages() %}
-     <div id="header">
-      <div class="alert alert-primary mb-0 text-center" role="alert">
-        {{ get_flashed_messages() | join(" ") }}
-      </div>
-    </div>
-    {% endif %}
-    <!--the content section-->
+
+    <!-- Main Content Section -->
     <div class="main"> {% block main %}{% endblock %} </div>
-    <!--newsletter section-->
-    <section id="newsletter">
+    <!-- newsletter section -->
+    <section class="newsletter">
       <div class="newstext">
         <h4>Sign up For Newsletters</h4>
         <p>Get E-mail updates about our latest shop and special offers.</p>
       </div>
       <div class="form">
-        <input type="text" placeholder="Your email address">
-        <button class="normal">Sign Up</button>
+        <input type="text" id="mail" placeholder="Your email address">
+        <button class="normal" onclick="submitMail()">Sign Up</button>
+    <script>
+               function submitMail() {
+             // Get the value of the mail field
+             var mailField = document.getElementById('mail').value;
+
+// Check if the mail field is empty
+if (mailField.trim() === '') {
+    // Display apology message instead of showing the modal
+    alert('Please enter your email before submitting.');
+} else if (!isValidEmail(mailField)) {
+                // Display apology message for invalid email format
+                alert('Please enter a valid email address.');
+            }else  {
+  alert('Your mail has been submitted successfully. Thank you!');
+
+}
+function isValidEmail(email) {
+            // Regular expression for a simple email validation
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+      }
+ </script>
       </div>
     </section>
+    <!-- Footer Section -->
     <footer class="section-p1">
       <!--company information-->
       <div class="col">
+         <!-- Logo and company information -->
         <a href="/">
           <img src="/static/img/logo.png" class="logo" alt="logo">
         </a>
       </div>
       <div class="col">
+        <!-- Contact and social links -->
         <h4>Contact</h4>
         <p>
           <strong>Address:</strong>
@@ -216,11 +271,11 @@
         <div>
           <h4>Follow Us</h4>
           <div class="icon">
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-          </div>
+            <a href="{{ url_for('comingsoon') }}"><i class="fab fa-facebook-f"></i></a>
+            <a href="{{ url_for('comingsoon') }}"><i class="fab fa-twitter"></i></a>
+            <a href="{{ url_for('comingsoon') }}"><i class="fab fa-instagram"></i></a>
+            <a href="{{ url_for('comingsoon') }}"><i class="fab fa-linkedin"></i></a>
+        </div>
         </div>
       </div>
       <!--terms of service and more-->
@@ -231,7 +286,7 @@
         <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
         <a href="{{ url_for('terms_conditions') }}">Terms & Conditions</a>
               </div>
-      <!--user account-->
+      <!--user account section -->
       <div class="col">
         <h4>My account</h4>
         {% if session["user_id"] %}
@@ -242,9 +297,9 @@
           <a href="/login">Log In</a>
           {% endif %}
       </div>
-      <!--links to app-->
+<!-- Links to app and payment information -->
       <div class="col install">
-        <h4>Installt</h4>
+        <h4>Install</h4>
         <p>From App Store or Google Play</p>
         <div class="row">
             <a href="{{ url_for('comingsoon') }}">
@@ -252,12 +307,13 @@
             <img src="/static/img/play.jpg" alt="play">
           </a>
         </div>
-        <!--payment links-->
         <p>Secured payment Gateways</p>
+        <a href="{{ url_for('comingsoon') }}">
         <img src="/static/img/pay.png" alt="pay">
+      </a>
       </div>
-      <!--copywrite-->
-      <div class="copyright"> © 2023 | mylink </div>
+   <!-- Copyright information -->
+         <div class="copyright"> © 2023 | mylink </div>
     </footer>
   </body>
 </html>

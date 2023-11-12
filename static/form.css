@@ -1,0 +1,141 @@
+/* Set the overall area properties */
+.stack-area {
+  width: 100%;
+  height: 120vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Center the content horizontally and vertically */
+.center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+}
+
+/* Style the form */
+form {
+  width: 700px;
+  height: fit-content;
+  min-height: 338px;
+  padding: 44px;
+  background: white;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 100px 0px;
+  background-image: repeating-linear-gradient(55deg, #C0C0C0 25%, transparent 25%, transparent 75%, #E7AF86 75%, #C0C0C0), repeating-linear-gradient(45deg, black 25%, #FFFFFF 25%, #FFFFFF 75%, #494847 75%, #494847);
+}
+
+/* Styling for the section */
+.section {
+  display: block;
+  min-width: 352px;
+  width: 352px;
+  min-height: 110px;
+  color: black;
+  margin: auto;
+}
+
+/* Style the header */
+.head {
+  color: #160D04;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 16px;
+}
+
+/* Styling for input fields */
+.inputf {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 14px;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  padding: 4px;
+  text-align: left;
+}
+.inputf label {
+  padding-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: "Segoe UI";
+  font-size: 15px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  padding: 6px 10px 6px 0px;
+  color: black;
+  line-height: 20px;
+}
+
+.input::placeholder {
+  color: black;
+}
+
+/* Style the info section */
+.info {
+  width: 100%;
+  font-size: 12px;
+  display: block;
+  text-align: right;
+}
+
+/* Styling for links within the info section */
+.info a {
+  font-weight: 500;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s, transform 0.2s;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  padding: 0 0.25em;
+  text-align: right;
+}
+
+/* Styling for links on hover */
+a:hover {
+  color: #d04c3f;
+}
+
+/* Styling for buttons */
+.button-35 {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: transparent 0 0 0 20px, rgba(18, 20, 18, .1) 0 20px 20px;
+  box-sizing: border-box;
+  color: #121212;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 1 1 auto;
+  font-size: 1.2rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s, -webkit-box-shadow .4s;
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* Styling for button hover */
+.button-35:hover {
+  box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
+}
+

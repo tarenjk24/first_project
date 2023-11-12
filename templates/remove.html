@@ -4,120 +4,38 @@
     remove
 {% endblock %}
 
-{% block main %}<style>
-    /*style form*/
-    body {
-      width: 100%;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
+{% block main %}
+<link href="/static/form.css" rel="stylesheet">
 
-    .stack-area {
-      width: 100%;
-      height: 300vh;
-      position: relative;
-      display: flex;
-      justify-content: center;
-    }
-
-    .center {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-size: cover;
-    }
-
-    form {
-      width: 440px;
-      height: fit-content;
-      min-height: 338px;
-      padding: 44px;
-      background: white;
-      box-sizing: border-box;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px;
-    }
-
-    .label {
-      color: black;
-      font-size: 15px;
-    }
-
-    .section {
-      display: block;
-      min-width: 352px;
-      width: 352px;
-      min-height: 110px;
-    }
-
-    .head {
-      color: black;
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      margin-top: 16px;
-    }
-
-    .inputf {
-      width: 100%;
-      height: fit-content;
-      margin-bottom: 16px;
-      position: relative;
-      display: block;
-      box-sizing: border-box;
-      padding: 2px;
-    }
-
-    .input {
-      width: 100%;
-      height: 100%;
-      box-sizing: border-box;
-      font-family: "Segoe UI";
-      font-size: 15px;
-      outline: none;
-      border: none;
-      border-bottom: 1px solid black;
-      padding: 6px 10px 6px 0px;
-      color: rgb(27, 27, 27);
-      line-height: 20px;
-    }
-
-    .input::placeholder {
-      color: rgba(0, 0, 0, 0.6);
-    }
-
-    .info {
-      width: 100%;
-      font-size: 13px;
-      display: block;
-      position: relative;
-      width: fit-content;
-      margin-bottom: 16px;
-    }
-  </style>
+  <!-- Form for removing account -->
   <div class="stack-area">
     <div class="center" id="div">
       <form action="/remove" method="post">
         <span class="section">
           <div class="head">Remove Account</div>
+
+          <!-- Input field for username -->
           <span class="inputf">
             <label for="username" class="label"> Enter your username: </label>
             <input autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text" required>
           </span>
-        </span>
-        <span class="inputf">
-          <label for="password" class="label"> Enter your password: </label>
-          <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" required="">
-        </span>
-        <span class="inputf">
-          <label for="password" class="label"> Confirm your password: </label>
-          <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password (again)" type="password" required="">
-        </span>
-        <span class="btn">
-          <button class="button-52" type="submit">Delete</button>
-        </span>
+
+          <!-- Input field for password -->
+          <span class="inputf">
+            <label for="password" class="label"> Enter your password: </label>
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" required="">
+          </span>
+
+          <!-- Input field for password confirmation -->
+          <span class="inputf">
+            <label for="password" class="label"> Confirm your password: </label>
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Password (again)" type="password" required="">
+          </span>
+
+          <!-- Button to submit the form -->
+          <span class="btn">
+            <button class="button-35" type="submit">Delete</button>
+          </span>
       </form>
     </div>
   </div>

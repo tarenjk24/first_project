@@ -1,0 +1,81 @@
+/* Center the content horizontally and vertically */
+.center {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+
+/* Styling for the main area */
+.area {
+    width: 100%;
+    height: 120vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0 auto;
+}
+
+/* Styling for the left section */
+.left {
+  widh:80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling for paragraphs within the info section */
+.info p {
+    color: black;
+}
+
+/* Styling for heading within the info section */
+.info h2 {
+    color: linear-gradient(100.84deg, #4E4E4E -4.04%, #333333 9.33%, #1A1A1A 70.02%, #1A1A1A 62.06%, #262626 87.42%, #4E4E4E 112.12%);
+    padding: 10px;
+}
+th{
+    color: black;
+}
+
+/* Styling for the info section */
+.info {
+    font-size: 13px;
+    display: block;
+    position: relative;
+    width: fit-content;
+    margin-bottom: 16px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Styling for links within the info section */
+.info a {
+    color: #223067;
+    font-weight: 500;
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    padding: 5px;
+    text-align: right;
+}
+
+/* Styling for links on hover */
+a:hover {
+    color: #571919;
+}
+.info img{
+    border-radius: 3px;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 25vh;
+    padding: 10px 15px;
+    border: 1px solid white;
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.05);
+
+}

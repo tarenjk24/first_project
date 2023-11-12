@@ -5,89 +5,63 @@
 {% endblock %}
 
 {% block main %}
-<style>
-#product1{
-  text-align: center;
-}
-#product1 .pro-container{
-  padding-top: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-#product1 .pro{
-  width: 100%;
-  min-width: 250px;
-  padding: 10px 12px;
-  border: 1px solid white;
-  border-radius: 25px;
-  box-shadow: 20px 20px 30px rgba(0.2, 0, 0, 0.06);
-  margin: 15px 0;
-  transition: 0.2s ease ;
-}
-#product1 .pro img{
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border-radius: 20px;
-}
-/* Add spacing between the images */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -15px;
-  justify-content: center;
-}
+    <!-- Include the external stylesheet -->
+    <link href="/static/products.css" rel="stylesheet">
 
-/* Adjust image size */
-.row img {
-  width: 50px;
-  height: 60vh;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-.nav-link {
-  text-align: center;
-  color: black;
-}
+    <!-- Products Section -->
+    <section id="product1" class="section-p2">
+        <!-- Container for the entire section -->
+        <div class="area">
+            <!-- Title for the section -->
+            <div class="title-1">Catalog</div>
 
-span{
-  padding-top: 30px;
-  margin-bottom: 20px;
-}
+            <!-- Container for product items -->
+            <div class="pro-container">
+                <div class="part">
+                    <!-- List of products in a row -->
+                    <ul class="row">
+                        <!-- Product 1 -->
+                        <li class="col-xs-6 col-md-3">
+                            <div class="pro">
+                                <a href="/products" class="nav-link">
+                                    <img src="/static/img/products/bic.jpg" alt="School Supplies">
+                                    <span>School Supplies</span>
+                                </a>
+                            </div>
+                        </li>
 
-</style>
-<section id="product1" class="section-p1">
-  <h2>Catalog</h2>
-  <div class="pro-container">
-    <div class="pro">
-    <ul class="row">
-			<li class="col-xs-6 col-md-3">
-			<a href="/products" class="nav-link">
-				<img src="/static/img/products/bic.jpg" alt="products">
-        <span>School Supplies</span>
-			</a>
-		</li>
-			<li class="col-xs-6 col-md-3">
-        <a href="/curriculums"  class="nav-link">
-				<img src="/static/img/products/curriculum.png" alt="curriculums">
-        <span>Curriculum Books</span>
-			</a>
-		</li>
-			<li class="col-xs-6 col-md-3">
-        <a href="/grades" class="nav-link">
-				<img src="/static/img/products/grades.png" alt="grades">
-        <span>Grade Books</span>
-			</a>
-		</li>
-			<li class="col-xs-6 col-md-3">
-        <a href="/novel"  class="nav-link">
-				<img src="/static/img/products/sputnik sweetheart .jpg" alt="novel">
-        <span>Novels</span>
-			</a>
-		</li>
-		</ul>
-  </div>
-</div>
-</section>
+                        <!-- Product 2 -->
+                        <li class="col-xs-6 col-md-3">
+                            <div class="pro">
+                                <a href="/curriculums" class="nav-link">
+                                    <img src="/static/img/products/curriculum.png" alt="Curriculum Books">
+                                    <span>Curriculum Books</span>
+                                </a>
+                            </div>
+                        </li>
+
+                        <!-- Product 3 -->
+                        <li class="col-xs-6 col-md-3">
+                            <div class="pro">
+                                <a href="/grades" class="nav-link">
+                                    <img src="/static/img/products/grades.png" alt="Grade Books">
+                                    <span>Grade Books</span>
+                                </a>
+                            </div>
+                        </li>
+
+                        <!-- Product 4 -->
+                        <li class="col-xs-6 col-md-3">
+                            <div class="pro">
+                              <a href="/novel" class="nav-link">
+                                <img src="/static/img/products/sputnik sweetheart .jpg" alt="novel">
+                                <span>Novels</span>
+                            </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

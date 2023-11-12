@@ -1,80 +1,52 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    products
+    Products
 {% endblock %}
 
 {% block main %}
-<style>
-#product1{
-  text-align: center;
-}
-#product1 .pro-container{
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
-  flex-wrap: wrap;
-}
-#product1 .pro{
-  width: 23%;
-  min-width: 250px;
-  padding: 10px 12px;
-  border: 1px solid white;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.03);
-  margin: 15px 0;
-  transition: 0.2s ease ;
-  position: relative;
-}
-#product1 .pro:hover{
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.6);
-}
-#product1 .pro img{
-  width: 100%;
-  border-radius: 20px;
-}
-#product1 .pro .des{
-  text-align: start;
-  padding: 10px 0;
-}
-#product1 .pro .des span{
-  color: black;
-  font-size: 12px;
-}
-#product1 .pro .des h5{
-  padding-top: 7px;
-  color: black;
-  font-size: 14px;
-}
-#product1 .pro .des h4{
-  padding-top: 7px;
-  color: gold;
-  font-size: 15px;
-  font-weight: 700;
-}
-</style>
+<link href="/static/products.css" rel="stylesheet">
+
+<!-- Section for displaying products -->
 <section id="product1" class="section-p1">
-  <h2>Featured Products</h2>
+  <div class="title-1">Featured Products</div>
+
+
+
+  <!-- Container for product display -->
+  <div class="pro-container">
+    <div class="part">
+      <ul class="row">
+  <!-- Icon for navigating back -->
   <i class="fa-solid fa-reply" style="color: #000000;cursor: pointer;display: flex; justify-content: space-between; align-items: center;"  onclick="goBack()"></i>
 
+  <!-- JavaScript function to navigate back -->
   <script>
       function goBack() {
           window.history.back();
       }
   </script>
-  <div class="pro-container">
-    {% for product in products %}
-    <div class="pro">
-      <img src="{{ product.cover }}" alt="{{ product.name }}">
-      <div class="des">
-        <span>{{ product.brand }}</span>
-        <h5>{{ product.name }}</h5>
-        <h4>{{ product.price }}</h4>
-        <a href="/addtocart"><span> DETAILS </span></a>
-      </div>
-    </div>
-    {% endfor %}
+      {% for product in products %}
+        <!-- List item for each product -->
+        <li class="col-xs-6 col-md-3">
+          <div class="pro">
+            <!-- Product image -->
+            <img src="{{ product.cover }}" alt="{{ product.name }}">
+            <div class="des">
+              <!-- Product brand -->
+              <span>{{ product.brand }}</span>
+              <!-- Product name -->
+              <h5>{{ product.name }}</h5>
+              <!-- Product price -->
+              <h4>{{ product.price }}</h4>
+              <!-- Link to the product details page -->
+              <a href="{{ url_for('productdetails', id=product.id) }}"> details </a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
   </div>
+</div>
 </section>
 {% endblock %}

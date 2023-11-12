@@ -144,6 +144,7 @@ def logout():
 
 
 # remove
+
 @app.route("/remove", methods=["GET", "POST"])
 @login_required
 def remove():
@@ -179,9 +180,8 @@ def remove():
             user_id = user_id_data[0]["id"]
 
             # Delete user's account and related data from the database.
-            db.execute("DELETE FROM users WHERE id = ?", (user_id,))
-            db.execute("DELETE FROM users WHERE username = ?", (username,))
-            db.execute("DELETE FROM users WHERE hash = ?", (password,))
+            db.execute("DELETE FROM account WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM USERS WHERE username = ?", (username,))
 
             # Display success message.
             flash("Account deleted successfully.", "success")
@@ -194,6 +194,18 @@ def remove():
     else:
         return render_template("remove.html")
 
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    if request.method == "POST":
+        email = request.form.get('email')
+        db.execute(
+            "INSERT INTO users (email) VALUES (?)",
+            mail
+        )
+    else:
+        return render_template('layout.html', email=email)
 
 ''' link routes '''
 @app.route('/about_us')
@@ -236,6 +248,8 @@ def books():
     books = db.execute("SELECT * FROM products WHERE type='books' ")
 
     return render_template('books.html', books=books)
+
+
 
 # categories books:
 @app.route("/grades", methods=["GET", "POST"])
@@ -282,71 +296,71 @@ def profile():
     return render_template("profile.html", user_data=user_data[0], orders=orders, information=information)
 
 
-def get_product_details_by_id(product_id):
-    try:
-        # Connect to the database
-        conn = sqlite3.connect('library.db')
-        cursor = conn.cursor()
+"""cart"""
 
-        # Execute a query to fetch product details by ID
-        cursor.execute("SELECT * FROM products WHERE id=?", (product_id,))
-        product = cursor.fetchone()  # Fetch one row
+@app.route("/productdetails/<int:id>", methods=["GET", "POST"])
+def productdetails(id):
+
+    product = db.execute("SELECT id FROM products WHERE id=?", (id,))
+    details = db.execute("SELECT * FROM products WHERE id=?", (id,))
+
+    print("Product:", details)
+
+    return render_template('productdetails.html', details=details, product=product)
+
+
+def get_product_details_by_id(id):
+
+        product = db.execute("SELECT * FROM products WHERE id=?", (product_id,))
 
         # Print for debugging
         print("Product:", product)
+        return product
 
-        return product  # Return the product details as a tuple or None if not found
+@app.route('/addtocart/<int:id>', methods=["GET","POST"])
+@login_required
+def addtocart(id):
+    if request.method == "POST":
+        quantity = request.form.get('quantity')
+        product = get_product_details_by_id(id)
+        if not product:
+            return apology("must provide a symbol", 400)
+        elif not quantity:
+            return apology("must provide shares", 400)
+        elif not quantity.isdigit() or int(quantity) <= 0:
+            return apology("invalid  shares", 400)
+        db.execute(
+                "INSERT INTO cart (productid, quantity) VALUES (?, ?)",
+                (product, quantity)
+                )
+        flash("Added to cart!", "success")
+        return redirect("/")
 
-    except sqlite3.Error as e:
-        print("Database error:", e)
-        return None
-
-    finally:
-        # Close the database connection
-        conn.close()
-
-@app.route('/product/<int:id>')
-def product_details(id):
-    # Assuming you have a function to fetch product details by ID from your database
-    product = get_product_details_by_id(id)
-
-    if product:
-        return render_template('product_details.html', product=product)
     else:
-        # Handle the case where the product with the given ID does not exist
-        return apology('product not found', 404)
+        product = db.execute("SELECT * FROM products WHERE id=?", (id,)).fetchone()
+        return render_template("productdetails.html", details=[product])
 
-
-
-
-# display the cart
-@app.route('/cart')
+# checkout
+@app.route("/cart", methods=["GET", "POST"])
 @login_required
-def view_cart():
-    cart_contents = display_cart(user_id)
-    return render_template('cart.html', cart_contents=cart_contents)
+def cart():
+
+    user_id = session["user_id"]
 
 
+    query = """
+    SELECT p.id, p.name, p.price, p.availability, p.cover, c.quantity
+    FROM products p
+    INNER JOIN cart c ON p.id = c.productid
+    """
+    rows = db.execute(query)
+
+    return render_template("cart.html", rows=rows)
 
 
-# Function to display the cart
-def display_cart(user_id):
-    cart_items = Cart.query.filter_by(user_id=user_id).all()
-
-    # Fetch product and book details for each item in the cart
-    cart_details = []
-    for item in cart_items:
-        product = Product.query.get(item.product_id)
-        cart_details.append({
-            "product_name": product.product_name,
-            "quantity": item.quantity,
-            "price": product.price
-        })
-
-    return cart_details
-
+''' paryment and checkout routes '''
+# checkout
 @app.route("/checkout", methods=["GET", "POST"])
-@login_required
 def checkout():
     if request.method == "POST":
         # Get user input data from the form
@@ -355,30 +369,36 @@ def checkout():
         address = request.form.get("address")
         postal_code = request.form.get("postal_code")
         phone_number = request.form.get("phone_number")
-        note = request.form.get("note", "Default Note")
 
         # Validate user input
         if not city or not state or not address or not postal_code or not phone_number:
             return apology("Please provide all required information.", 400)
 
-        if not postal_code.isdigit() or int(postal_code) <= 0:
+        elif not postal_code.isdigit() or int(postal_code) <= 0:
             return apology("Invalid postal code. Please provide a valid postal code.", 400)
 
-        if not phone_number.isdigit() or int(phone_number) <= 0:
+        elif not phone_number.isdigit() or int(phone_number) <= 0:
             return apology("Invalid phone number. Please provide a valid phone number.", 400)
 
-        # Insert user data into the database
-        db.execute(
-            "INSERT INTO address (city, state, address, postal_code, phone_number, note) VALUES (?, ?, ?, ?, ?, ?)",
-            (city, state, address, postal_code, phone_number, note)
-        )
-        db.commit()
+        try:
+            db.execute(
+                "INSERT INTO orders (city, state, address, postal_code, phone_number, note) VALUES (?, ?, ?, ?, ?)",
+                (city, state, address, postal_code, phone_number)
+            )
 
-        # Display success message to the user
-        flash("Address saved successfully.", "success")
 
-        # Redirect the user to the payment page
-        return redirect("/payment")
+            # Display success message to the user
+            flash("Address saved successfully.", "success")
+
+            # Redirect the user to the payment page
+            return redirect("/cart")
+
+        except Exception as e:
+            # Print the exception for debugging purposes
+            print("Error:", str(e))
+
+            # Display an apology message or redirect as needed
+            return apology("An error occurred while saving the address.", 500)
 
     else:
         # Render the checkout template when the request method is GET
@@ -386,17 +406,9 @@ def checkout():
 
 
 
+# payment
 @app.route("/payment", methods=["GET", "POST"])
 @login_required
 def payment():
-    if request.method == 'POST':
-        selected_method = request.form.get('method_paying')
-
-        if selected_method == 'cash':
-            # Perform actions for cash payment
-            flash("Thank you for your order! We will deliver soon.", "success")
-        elif selected_method == 'other':
-            flash("Sorry! online payment will be implemented in a future version of books brightness.", "error")
-
-    else:
         return render_template('payment.html')
+

@@ -5,76 +5,48 @@
 {% endblock %}
 
 {% block main %}
-<style>
-#product1{
-  text-align: center;
-}
-#product1 .pro-container{
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
-  flex-wrap: wrap;
-}
-#product1 .pro{
-  width: 23%;
-  min-width: 250px;
-  padding: 10px 12px;
-  border: 1px solid white;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.03);
-  margin: 15px 0;
-  transition: 0.2s ease ;
-  position: relative;
-}
-#product1 .pro:hover{
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.6);
-}
-#product1 .pro img{
-  width: 100%;
-  border-radius: 20px;
-}
-#product1 .pro .des{
-  text-align: start;
-  padding: 10px 0;
-}
-#product1 .pro .des span{
-  color: black;
-  font-size: 12px;
-}
-#product1 .pro .des h5{
-  padding-top: 7px;
-  color: black;
-  font-size: 14px;
-}
-#product1 .pro .des h4{
-  padding-top: 7px;
-  color: gold;
-  font-size: 15px;
-  font-weight: 700;
-}
-</style>
+<!-- Link to external CSS file for styling the page -->
+<link href="/static/products.css" rel="stylesheet">
+
+<!-- Section for displaying featured books -->
 <section id="product1" class="section-p1">
-  <h2>Featured books</h2>
+  <!-- Heading for the featured books section -->
+  <div class="title-1">Featured books</div>
+
+
+
+    <!-- Container for the product items -->
+    <div class="pro-container">
+      <div class="part">
+          <ul class="row">
+          <!-- Icon for navigating back to the previous page -->
   <i class="fa-solid fa-reply" style="color: #000000;cursor: pointer;display: flex; justify-content: space-between; align-items: center;"  onclick="goBack()"></i>
 
+  <!-- Script for the goBack function to navigate back in the browser history -->
   <script>
       function goBack() {
           window.history.back();
       }
   </script>
-  <div class="pro-container">
-    {% for book in books %}
-    <div class="pro">
-      <img src="{{ book.cover }}" alt="{{ book.name }}">
-      <div class="des">
-        <span>{{ book.category }}</span>
-        <h5>{{ book.name }}</h5>
-        <h4>{{ book.price }}</h4>
-        <a href="/addtocart"><span> DETAILS </span></a>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+
+        <!-- Loop through each book in the list of books -->
+        {% for book in books %}
+          <li class="col-xs-6 col-md-3">
+            <div class="pro">
+              <!-- Display the book cover and name -->
+              <img src="{{ book.cover }}" alt="{{ book.name }}">
+              <div class="des">
+                <span>{{ book.category }}</span>
+                <h5>{{ book.name }}</h5>
+                <h4>{{ book.price }}</h4>
+                <a href="{{ url_for('productdetails', id=book.id) }}"> details </a>
+              </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</div>
 </section>
 {% endblock %}
+

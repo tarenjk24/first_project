@@ -8,16 +8,21 @@
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <!-- Your stylesheet -->
     <link href="/static/styles.css" rel="stylesheet">
     <script src="/static/responsive.js"></script>
     <link rel="icon" href="/static/img/logo.png" type="image/x-icon">
-    <title>Books Brightness {% block title %}{% endblock %}</title>
+
+        <title>Books Brightness {% block title %}{% endblock %}</title>
+
   </head>
   <body>
     <section id="header">
       <nav class="navbar">
-        <!--Menu when user logged in--> {% if session["user_id"] %} <ul>
+        <!--Menu when user logged in-->
+        {% if session["user_id"] %}
+        <ul>
           <li>
             <a class="button-52" href="/Books_s">Books</a>
           </li>
@@ -37,7 +42,9 @@
             <i class="far fa-times"></i>
           </a>
         </ul>
-        <!--homepage--> {% else %} <ul>
+        <!--homepage-->
+        {% else %}
+        <ul>
           <li>
             <a class="button-52" href="/Books_s">Books</a>
           </li>
@@ -48,43 +55,57 @@
           <li>
             <a class="button-52" href="/login">Log In</a>
           </li>
-        </ul> {% endif %}
+        </ul>
+        {% endif %}
       </nav>
-      <!--responsive-->
+       <!--responsive-->
       <div id="mobile">
         <a class="nav-link" href="/cart">
-          <i class="fa-solid fa-cart-shopping"></i>Cart </a>
-        <i id="bar" class="fas fa-outdent"></i>
-      </div>
+        <i class="fa-solid fa-cart-shopping"></i>Cart </a>
+      <i id="bar" class="fas fa-outdent"></i>
+</div>
     </section>
     <!--hero section-->
     <section id="hero"></section>
-    <!-- About Us Section -->
-    <section id="about-us" class="section-p1">
-      <div class="container">
-        <h2>About Us</h2>
-        <p>Welcome to [Your Business Name]! We are passionate about [briefly describe your business and its mission]. With a focus on [mention any unique selling points or values], we strive to [describe how you aim to serve your customers or clients].</p>
-      </div>
-      <div class="container">
-        <h3>Our Story</h3>
-        <p>[Share the history and journey of your business, how it was founded, and any significant milestones.]</p>
-      </div>
-      <div class="container">
-        <h3>Our Team</h3>
-        <p>[Highlight key members of your team, their roles, and expertise. You can also include photos and short bios.]</p>
-      </div>
-      <div class="container">
-        <h3>Our Mission</h3>
-        <p>[Explain the core mission and values that drive your business.]</p>
-      </div>
-      <div class="container">
-        <h3>Contact Us</h3>
-        <p>[Provide contact information or a link to your contact page.]</p>
-      </div>
-      <div class="container">
-        <p>We look forward to serving you and providing you with the best [products/services]!</p>
-      </div>
-    </section>
+<!-- Privacy Policy Section -->
+<section id="privacy-policy" class="section-p1">
+    <div class="container">
+        <h2>Privacy Policy</h2>
+
+        <p>Your privacy is important to us at [Your Business Name]. We are committed to safeguarding your personal information and want you to understand how we collect, use, and protect your data. Please review our privacy policy to learn more:</p>
+
+        <div class="info-section">
+            <h3>Information We Collect</h3>
+            <p>[Explain the types of data you collect, such as contact information, payment details, and browsing history.]</p>
+        </div>
+
+        <div class="info-section">
+            <h3>How We Use Your Information</h3>
+            <p>[Detail how collected data is used, like processing orders, improving services, and personalizing experiences.]</p>
+        </div>
+
+        <div class="info-section">
+            <h3>Data Security</h3>
+            <p>[Explain the measures you take to protect customer data from unauthorized access or breaches.]</p>
+        </div>
+
+        <div class="info-section">
+            <h3>Third-Party Disclosure</h3>
+            <p>[Clarify whether you share customer data with third parties, such as payment processors or shipping partners.]</p>
+        </div>
+
+        <div class="info-section">
+            <h3>Your Choices</h3>
+            <p>[Inform customers about their rights to access, update, or delete their personal information.]</p>
+        </div>
+
+        <p>For a more comprehensive understanding, please review our complete privacy policy. By using our website, you consent to the practices described in this policy.</p>
+    </div>
+</section>
+
+
+
+
     <!--footer section-->
     <footer class="section-p1">
       <!--company information-->
@@ -106,18 +127,10 @@
         <div>
           <h4>Follow Us</h4>
           <div class="icon">
-            <a href="#">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-pinterest-p"></i>
-            </a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
           </div>
         </div>
       </div>
@@ -129,6 +142,7 @@
         <a href=""> Privacy policy </a>
         <a href=""> Terms& Conditions </a>
       </div>
+
       <!--user account-->
       <div class="col">
         <h4>My account</h4>
@@ -142,12 +156,8 @@
         <h4>Installt</h4>
         <p>From App Store or Google Play </p>
         <div class="row">
-          <a href="/comingsoon.html">
-            <img src="/static/img/app.jpg" alt="">
-          </a>
-          <a href="/comingsoon.html">
-            <img src="/static/img/play.jpg" alt="">
-          </a>
+          <a href="/comingsoon.html"> <img src="/static/img/app.jpg" alt=""></a>
+            <a href="/comingsoon.html"><img src="/static/img/play.jpg" alt=""></a>
         </div>
         <!--payment links-->
         <p>Secured payment Gateways </p>
@@ -156,6 +166,7 @@
       <!--copywrite-->
       <div class="copyright"> &copy; 2023 | mylink</div>
     </footer>
+
   </body>
 </html>
 

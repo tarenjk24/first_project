@@ -5,140 +5,58 @@
 {% endblock %}
 
 {% block main %}
-<style>
- /*style form*/
-    body {
-      width: 100%;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
+<!-- Link to external CSS file for styling the form -->
+<link href="/static/form.css" rel="stylesheet">
 
-    .stack-area {
-      width: 100%;
-      height: 300vh;
-      position: relative;
-      display: flex;
-      justify-content: center;
-    }
-
-    .center {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-size: cover;
-    }
-
-    form {
-      width: 440px;
-      height: fit-content;
-      min-height: 338px;
-      padding: 44px;
-      background: white;
-      box-sizing: border-box;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px;
-    }
-
-    .label {
-      color: black;
-      font-size: 15px;
-    }
-
-    .section {
-      display: block;
-      min-width: 352px;
-      width: 352px;
-      min-height: 110px;
-    }
-
-    .head {
-      color: black;
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      margin-top: 16px;
-    }
-
-    .inputf {
-      width: 100%;
-      height: fit-content;
-      margin-bottom: 16px;
-      position: relative;
-      display: block;
-      box-sizing: border-box;
-      padding: 2px;
-    }
-
-    .input {
-      width: 100%;
-      height: 100%;
-      box-sizing: border-box;
-      font-family: "Segoe UI";
-      font-size: 15px;
-      outline: none;
-      border: none;
-      border-bottom: 1px solid black;
-      padding: 6px 10px 6px 0px;
-      color: rgb(27, 27, 27);
-      line-height: 20px;
-    }
-
-    .input::placeholder {
-      color: rgba(0, 0, 0, 0.6);
-    }
-
-    .info {
-      width: 100%;
-      font-size: 13px;
-      display: block;
-      position: relative;
-      width: fit-content;
-      margin-bottom: 16px;
-    }
-  </style>
-   <div class="stack-area">
+<!-- Container for the check-out form -->
+<div class="stack-area">
     <div class="center" id="div">
-<form action="/checkout" method="post">
-        <span class="section">
-          <div class="head">Check Out</div>
-          <span class="inputf">
-        <span for="label">City</span>
-        <input name="city" placeholder="e.g. Razi" type="text" autofocus class="form-control mx-auto w-auto">
-        </span>
-         </span>
-        <span class="inputf">
-        <span for="label">State</span>
-        <input name="state" placeholder="e.g. Manouba" type="text" autofocus class="form-control mx-auto w-auto" >
-        </span>
+        <!-- Form for checking out -->
+        <form action="/checkout" method="post">
+            <span class="section">
+                <!-- Heading for the check-out section -->
+                <div class="head">Check Out</div>
 
-        <span class="inputf">
-        <span for="label">Address</span>
-        <input name="address" placeholder="e.g. Street name - House number - State - Tunisia" type="text" autofocus class="form-control mx-auto w-auto" >
-          </span>
+                <!-- Form input fields for the city, state, address, postal code, phone number, and delivery note -->
+                <span class="inputf">
+                    <label for="city">City:</label>
+                    <input name="city" placeholder="e.g. Razi" type="text" autofocus class="form-control mx-auto w-auto">
+                </span>
 
-        <span class="inputf">
-        <span for="label">Postal Code</span>
-        <input  name="postal_code" placeholder="e.g. 1240" type="text" autofocus class="form-control mx-auto w-auto" >
-        </span>
+                <span class="inputf">
+                    <label for="state">State:</label>
+                    <input name="state" placeholder="e.g. Manouba" type="text" autofocus class="form-control mx-auto w-auto">
+                </span>
 
-        <span class="inputf">
-        <span for="label">Phone Number</span>
-        <input name="phone_number" placeholder="e.g. 216+" type="text" autofocus class="form-control mx-auto w-auto" >
-          </span>
+                <span class="inputf">
+                    <label for="address">Address:</label>
+                    <input name="address" placeholder="e.g. Street name - House number - State - Tunisia" type="text" autofocus class="form-control mx-auto w-auto">
+                </span>
 
-        <span class="inputf">
-        <span for="label">Delivery Note</span>
-        <textarea name="note" rows="4" placeholder="Leave us a note here" autofocus class="form-control mx-auto w-auto" ></textarea>
-        </span>
-        <div class="info">
-          <div class="info">
-            <a href="/">Delivery Information!</a>
-          </div>
-        </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+                <span class="inputf">
+                    <label for="postal_code">Postal Code:</label>
+                    <input name="postal_code" placeholder="e.g. 1240" type="text" autofocus class="form-control mx-auto w-auto">
+                </span>
+
+                <span class="inputf">
+                    <label for="phone_number">Phone Number:</label>
+                    <input name="phone_number" placeholder="e.g. 216+" type="text" autofocus class="form-control mx-auto w-auto">
+                </span>
+
+
+
+                <!-- Links for additional information and creating a new account -->
+                <div class="info">
+                    <a href="/delivery_information"><span>Delivery Information!</span></a>
+                    <hr>
+                    <a href="/register"><span>No account? Create one!</span></a>&nbsp;&nbsp;&nbsp;
+                </div>
+                &nbsp;&nbsp;
+
+                <!-- Submit button for the check-out form -->
+                <button class="button-35" type="submit">Submit</button>
+            </span>
+        </form>
     </div>
-  </div>
+</div>
 {% endblock %}
