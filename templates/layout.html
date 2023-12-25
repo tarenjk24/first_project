@@ -76,9 +76,7 @@
 
     </ul>
     {% endif %}
-    <div id="mobile">
-      <i id="barr" class="fa-sharp fa-solid fa-bars-staggered fa-flip" style="color: #000000;"></i>
-    </div>
+
   </div>
 
   </div>
@@ -132,7 +130,7 @@
           let angle = 0;
           cards.forEach((card) => {
             if (card.classList.contains("active")) {
-              card.style.transform = `translate(-50%, -120vh) rotate(-48deg)`;
+              card.style.transform = `translate(-50%, -120vh) rotate(-50deg)`;
             } else {
               card.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
               angle = angle - 10;
@@ -205,9 +203,6 @@
         }
               </script>
 </div>
-
-
-
     {% endif %}
 
     <!-- Main Content Section -->
@@ -218,34 +213,14 @@
         <h4>Sign up For Newsletters</h4>
         <p>Get E-mail updates about our latest shop and special offers.</p>
       </div>
+      <form action="{{ url_for('subscribe') }}" method="post">
       <div class="form">
-        <input type="text" id="mail" placeholder="Your email address">
-        <button class="normal" onclick="submitMail()">Sign Up</button>
-    <script>
-               function submitMail() {
-             // Get the value of the mail field
-             var mailField = document.getElementById('mail').value;
-
-// Check if the mail field is empty
-if (mailField.trim() === '') {
-    // Display apology message instead of showing the modal
-    alert('Please enter your email before submitting.');
-} else if (!isValidEmail(mailField)) {
-                // Display apology message for invalid email format
-                alert('Please enter a valid email address.');
-            }else  {
-  alert('Your mail has been submitted successfully. Thank you!');
-
-}
-function isValidEmail(email) {
-            // Regular expression for a simple email validation
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-      }
- </script>
+        <input type="text" id="mail" placeholder="Your email address" name="mail">
+        <button class="normal" type="submit">Sign Up</button>
+      </form>
       </div>
     </section>
+
     <!-- Footer Section -->
     <footer class="section-p1">
       <!--company information-->
@@ -281,7 +256,7 @@ function isValidEmail(email) {
       <!--terms of service and more-->
       <div class="col">
         <h4>Contact</h4>
-        <a href="{{ url_for('about_us') }}">About Us</a>
+        <a href="{{ url_for('aboutus') }}">About Us</a>
         <a href="{{ url_for('delivery_information') }}">Delivery Information</a>
         <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
         <a href="{{ url_for('terms_conditions') }}">Terms & Conditions</a>
@@ -290,8 +265,7 @@ function isValidEmail(email) {
       <div class="col">
         <h4>My account</h4>
         {% if session["user_id"] %}
-        <a href="">view cart</a>
-        <a href="">Whish list</a>
+        <a href="/cart">view cart</a>
         <a href="/profile">User Info</a>
          {% else %}
           <a href="/login">Log In</a>
@@ -307,13 +281,13 @@ function isValidEmail(email) {
             <img src="/static/img/play.jpg" alt="play">
           </a>
         </div>
-        <p>Secured payment Gateways</p>
+        <p>Secured payment gateways</p>
         <a href="{{ url_for('comingsoon') }}">
         <img src="/static/img/pay.png" alt="pay">
       </a>
       </div>
    <!-- Copyright information -->
-         <div class="copyright"> © 2023 | mylink </div>
+         <div class="copyright"> ©2023 | mylink </div>
     </footer>
   </body>
 </html>

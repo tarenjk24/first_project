@@ -6,8 +6,8 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import current_user
 from cs50 import SQL
-
 import sqlite3
+import re
 
 from helpers import apology, login_required, usd
 
@@ -15,6 +15,7 @@ from helpers import apology, login_required, usd
 
 # Configure application
 app = Flask(__name__)
+
 # Custom filter
 app.jinja_env.filters["usd"] = usd
 
@@ -36,8 +37,10 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-''' user authentication routes '''
-# login
+
+
+""" user authentication routes """
+# Forms
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -73,6 +76,7 @@ def login():
         return redirect("/")
     else:
         return render_template("login.html")
+
 
 
 # register
@@ -138,13 +142,12 @@ def logout():
 
     # Forget any user_id
     session.clear()
-
     # Redirect user to login form
     return redirect("/")
 
 
-# remove
 
+# delete
 @app.route("/remove", methods=["GET", "POST"])
 @login_required
 def remove():
@@ -158,257 +161,307 @@ def remove():
         # Validate user input.
         if not username:
             return apology("must provide username", 400)
-
         elif not password:
             return apology("must provide password", 400)
-
         elif not confirmation:
             return apology("must confirm password", 400)
-
         elif password != confirmation:
-            return apology("must confirm password", 400)
+            return apology("passwords must match", 400)
 
         # Query the database to check if the username is already taken.
         existing_user = db.execute("SELECT * FROM users WHERE username = ?", username)
         if not existing_user:
-            return apology("Wrong user", 403)
+            return apology("Wrong username", 403)
         else:
             # Get user id.
             user_id_data = db.execute(
                 "SELECT id FROM users WHERE username = ?", (username,)
             )
             user_id = user_id_data[0]["id"]
-
             # Delete user's account and related data from the database.
-            db.execute("DELETE FROM account WHERE user_id = ?", (user_id,))
-            db.execute("DELETE FROM USERS WHERE username = ?", (username,))
-
+            db.execute("DELETE FROM cart WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM users WHERE username = ?", (username,))
             # Display success message.
             flash("Account deleted successfully.", "success")
-
-            # Forget any user_id
             session.clear()
-
-            # Redirect user to login form
             return redirect("/")
     else:
         return render_template("remove.html")
 
 
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    if request.method == "POST":
-        email = request.form.get('email')
-        db.execute(
-            "INSERT INTO users (email) VALUES (?)",
-            mail
-        )
-    else:
-        return render_template('layout.html', email=email)
 
-''' link routes '''
-@app.route('/about_us')
-def about_us():
-    return render_template('campany/aboutus.html')
-
-@app.route('/delivery_information')
-def delivery_information():
-    return render_template('campany/deliveryinformation.html')
-
-@app.route('/privacy_policy')
-def privacy_policy():
-    return render_template('campany/privacypolicy.html')
-
-@app.route('/terms_conditions')
-def terms_conditions():
-    return render_template('campany/termsconditions.html')
-
-@app.route('/comingsoon')
-def comingsoon():
-    return render_template('campany/comingsoon.html')
-
-
-
-''' displaying routes '''
-# display a sample of product in main page
-@app.route("/", methods=["GET", "POST"])
-def index():
-
-    """shop catalog"""
-    books = db.execute("SELECT * FROM products")
-
-    supplies = db.execute("SELECT * FROM products")
-    return render_template('index.html', books=books, supplies=supplies)
-
-
-# display books ( 4 categories )
-@app.route("/books", methods=["GET", "POST"])
-def books():
-    books = db.execute("SELECT * FROM products WHERE type='books' ")
-
-    return render_template('books.html', books=books)
-
-
-
-# categories books:
-@app.route("/grades", methods=["GET", "POST"])
-def grades():
-
-    products = db.execute("SELECT * FROM products where category = 'grade'")
-
-    return render_template('grades.html', products=products)
-
-@app.route("/novel", methods=["GET", "POST"])
-def novel():
-
-    products = db.execute("SELECT * FROM products where category = 'Novel'")
-
-    return render_template('novel.html', products=products)
-
-@app.route("/curriculums", methods=["GET", "POST"])
-def curriculums():
-
-    products = db.execute("SELECT * FROM products where category = 'curriculum'")
-
-    return render_template('curriculums.html', products=products)
-
-# display products ( school supplies )
-@app.route("/products", methods=["GET", "POST"])
-def products():
-    products = db.execute("SELECT * FROM products WHERE type='supplies'")
-
-    return render_template('products.html', products=products)
-
-
-# profile
-@app.route("/profile", methods=["GET", "POST"])
-@login_required
-def profile():
-    """User profile and history"""
-    user_id = session["user_id"]
-
-    # Fetch user data and order history from the database
-    user_data = db.execute("SELECT * FROM users WHERE id = ?", user_id)
-    orders = db.execute("SELECT * FROM orders WHERE user_id = ?", user_id)
-    information = db.execute("SELECT * FROM addresses WHERE user_id = ?", user_id)
-
-    return render_template("profile.html", user_data=user_data[0], orders=orders, information=information)
-
-
-"""cart"""
-
-@app.route("/productdetails/<int:id>", methods=["GET", "POST"])
-def productdetails(id):
-
-    product = db.execute("SELECT id FROM products WHERE id=?", (id,))
-    details = db.execute("SELECT * FROM products WHERE id=?", (id,))
-
-    print("Product:", details)
-
-    return render_template('productdetails.html', details=details, product=product)
-
-
-def get_product_details_by_id(id):
-
-        product = db.execute("SELECT * FROM products WHERE id=?", (product_id,))
-
-        # Print for debugging
-        print("Product:", product)
-        return product
-
-@app.route('/addtocart/<int:id>', methods=["GET","POST"])
-@login_required
-def addtocart(id):
-    if request.method == "POST":
-        quantity = request.form.get('quantity')
-        product = get_product_details_by_id(id)
-        if not product:
-            return apology("must provide a symbol", 400)
-        elif not quantity:
-            return apology("must provide shares", 400)
-        elif not quantity.isdigit() or int(quantity) <= 0:
-            return apology("invalid  shares", 400)
-        db.execute(
-                "INSERT INTO cart (productid, quantity) VALUES (?, ?)",
-                (product, quantity)
-                )
-        flash("Added to cart!", "success")
-        return redirect("/")
-
-    else:
-        product = db.execute("SELECT * FROM products WHERE id=?", (id,)).fetchone()
-        return render_template("productdetails.html", details=[product])
-
-# checkout
-@app.route("/cart", methods=["GET", "POST"])
-@login_required
-def cart():
-
-    user_id = session["user_id"]
-
-
-    query = """
-    SELECT p.id, p.name, p.price, p.availability, p.cover, c.quantity
-    FROM products p
-    INNER JOIN cart c ON p.id = c.productid
-    """
-    rows = db.execute(query)
-
-    return render_template("cart.html", rows=rows)
-
-
-''' paryment and checkout routes '''
-# checkout
 @app.route("/checkout", methods=["GET", "POST"])
+@login_required
 def checkout():
+    """ Check out """
+
     if request.method == "POST":
-        # Get user input data from the form
+        # Get the form data
         city = request.form.get("city")
-        state = request.form.get("state")
         address = request.form.get("address")
         postal_code = request.form.get("postal_code")
         phone_number = request.form.get("phone_number")
 
-        # Validate user input
-        if not city or not state or not address or not postal_code or not phone_number:
+        # Validate the form data
+        if not city or not address or not postal_code or not phone_number:
             return apology("Please provide all required information.", 400)
-
         elif not postal_code.isdigit() or int(postal_code) <= 0:
             return apology("Invalid postal code. Please provide a valid postal code.", 400)
-
         elif not phone_number.isdigit() or int(phone_number) <= 0:
             return apology("Invalid phone number. Please provide a valid phone number.", 400)
 
         try:
+          # Get the user's ID from the session
+          user_id = session["user_id"]
+
+          # Fetch the product id from the cart table based on the user_id
+          rows = db.execute("SELECT product_id FROM cart WHERE user_id = ?", (user_id,))
+          for row in rows:
+            # Extract the product id from the row
+            product_id = row['product_id']
+            # Insert the order into the database
             db.execute(
-                "INSERT INTO orders (city, state, address, postal_code, phone_number, note) VALUES (?, ?, ?, ?, ?)",
-                (city, state, address, postal_code, phone_number)
-            )
+            "INSERT INTO orders (user_id, city, address, postal_code, phone_number, product_id) VALUES (:user_id, :city, :address, :postal_code, :phone_number, :product_id)",
+             user_id=user_id,
+              city=city,
+               address=address,
+               postal_code=postal_code,
+               phone_number=phone_number,
+                product_id=product_id)
 
-
-            # Display success message to the user
+            # Display success message.
             flash("Address saved successfully.", "success")
-
-            # Redirect the user to the payment page
             return redirect("/cart")
 
         except Exception as e:
-            # Print the exception for debugging purposes
+            # Log errors
             print("Error:", str(e))
-
-            # Display an apology message or redirect as needed
             return apology("An error occurred while saving the address.", 500)
 
     else:
-        # Render the checkout template when the request method is GET
+        # Render the check out template
         return render_template("checkout.html")
 
+# Submit mail
+@app.route('/layout', methods=['POST'])
+def subscribe():
+    """ Submit mail """
 
+    # Get the mail
+    email = request.form.get('mail')
+    # Validate the email
+    if not email:
+        flash('Please enter your email before submitting.', 'error')
+    elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        flash('Please enter a valid email address.', 'error')
+    else:
+        # Insert the 'Mail' in the database
+        db.execute("INSERT INTO Mail (email) VALUES (?)", email)
+        # Display success message.
+        flash('Your mail has been submitted successfully. Thank you!', 'success')
+        # Redirect to the home page
+        return redirect("/")
 
-# payment
+# link routes
+@app.route("/aboutus")
+def aboutus():
+    """ render about us template """
+    return render_template('aboutus.html')
+
+@app.route('/delivery_information')
+def delivery_information():
+    """ render about us template """
+    return render_template('deliveryinformation.html')
+
+@app.route('/privacy_policy')
+def privacy_policy():
+    """ render privacy policy template """
+    return render_template('privacypolicy.html')
+
+@app.route('/terms_conditions')
+def terms_conditions():
+    """ render terms condition template """
+    return render_template('termsconditions.html')
+
+@app.route('/comingsoon')
+def comingsoon():
+    """ render coming soon template """
+    return render_template('comingsoon.html')
+
 @app.route("/payment", methods=["GET", "POST"])
 @login_required
 def payment():
-        return render_template('payment.html')
+    """ render payment template """
+    return render_template('payment.html')
 
+
+
+# Displaying routes
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    """ Display profile """
+
+    # Get the user's ID from the session
+    user_id = session["user_id"]
+    # Query the database for the user's data
+    user_data = db.execute("SELECT * FROM users WHERE id = ?", user_id)
+    # Query the database for the user's orders
+    orders = db.execute("SELECT address, city, postal_code, phone_number, history, id FROM orders WHERE user_id = ?", user_id)
+    # Query the database for the products in the user's cart
+    items = db.execute("SELECT products.price, cart.quantity FROM cart JOIN products ON cart.product_id = products.id WHERE cart.user_id = ?", user_id)
+
+    # Calculate the total amount for the items in the cart
+    total_amount = 0
+    for item in items:
+        total_amount += item['price'] * item['quantity']
+
+    # Render the profile template with the user's data, orders, and total amount
+    return render_template("profile.html", user_data=user_data[0], orders=orders, total_amount=total_amount)
+
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    """ Display shop catalog """
+
+    #  Query the database for all products and supplies
+    books = db.execute("SELECT * FROM products")
+    supplies = db.execute("SELECT * FROM products")
+
+    # Renders them using the 'index.html' template.
+    return render_template('index.html', books=books, supplies=supplies)
+
+
+@app.route("/books", methods=["GET", "POST"])
+def books():
+    """ Display books catalog """
+
+    #  Query the database for all the books.
+    books = db.execute("SELECT * FROM products WHERE type='books' ")
+    # Renders them using the 'books.html' template.
+    return render_template('books.html', books=books)
+
+
+@app.route("/grades", methods=["GET", "POST"])
+def grades():
+    """ Display school books """
+
+    #  Query the database for all the school books.
+    products = db.execute("SELECT * FROM products where category = 'grade'")
+    # Renders them using the 'grades.html' template.
+    return render_template('grades.html', products=products)
+
+
+@app.route("/novel", methods=["GET", "POST"])
+def novel():
+    """ Display novels """
+
+    #  Query the database for all novel.
+    products = db.execute("SELECT * FROM products where category = 'Novel'")
+    # Renders them using the 'novel.html' template.
+    return render_template('novel.html', products=products)
+
+
+@app.route("/curriculums", methods=["GET", "POST"])
+def curriculums():
+    """ Display curriculums """
+
+    #  Query the database for all the curriculums.
+    products = db.execute("SELECT * FROM products where category = 'curriculum'")
+    # Renders them using the 'curriculums.html' template.
+    return render_template('curriculums.html', products=products)
+
+
+@app.route("/products", methods=["GET", "POST"])
+def products():
+    """ Display products """
+
+    #  Query the database for only the products.
+    products = db.execute("SELECT * FROM products WHERE type='supplies'")
+    # Renders them using the 'products.html' template.
+    return render_template('products.html', products=products)
+
+
+
+
+# cart and product details
+@app.route("/productdetails/<int:id>", methods=["GET", "POST"])
+def productdetails(id):
+    """ Display products details """
+
+    #  Query the database for the product details according to its id.
+    details = db.execute("SELECT * FROM products WHERE id=?", (id,))
+    # Print the product details to the console (for debugging purposes).
+    print("Product:", details)
+    # Renders them using the 'productdetails.html' template.
+    return render_template('productdetails.html', details=details)
+
+
+
+@app.route('/addtocart/<id>', methods=["GET","POST"])
+@login_required
+def addtocart(id):
+    """ Adds products to the cart """
+    try:
+        # Check if the request method is POST
+        if request.method == "POST":
+            # Get the quantity from the form.
+            quantity = request.form.get('quantity')
+            # Validate the quantity
+            if not quantity:
+                return apology("must provide quantity", 400)
+            elif not quantity.isdigit():
+                return apology("invalid  number", 400)
+            # Convert quantity into an int
+            quantity = int(quantity)
+
+            # Check if the quantity is less than 0
+            if quantity <= 0:
+                return apology("invalid number", 400)
+            # Get the user's ID from the session
+            user_id = session["user_id"]
+            # Convert the poduct id into an int
+            product_id = int(id)
+
+            # Check if product exists
+            product = db.execute("SELECT * FROM products WHERE id=?", (id,))
+            if not product:
+                return apology("product does not exist", 404)
+
+            # Insert the product into the cart in the database
+            db.execute(
+            "INSERT INTO cart (user_id, product_id, quantity) VALUES (:user_id, :product_id, :quantity)",
+            user_id=user_id,
+            product_id=product_id,
+            quantity=quantity,
+        )
+            # Display success message.
+            flash("Added to cart!", "success")
+    # Log errors
+    except Exception as e:
+        app.logger.error(f"Error in addtocart: {e}")
+        return apology("an error occurred", 500)
+    else:
+        # Render the product details page
+        return render_template("productdetails.html")
+
+
+
+@app.route("/cart", methods=["GET", "POST"])
+@login_required
+def cart():
+    """ Display cart """
+
+    # Get the user's ID from the session
+    user_id = session["user_id"]
+    # Query the data base to get the data of the products in the user's cart
+    query = """ SELECT p.id, p.name, p.price, p.availability, p.cover, c.quantity
+    FROM products p
+    INNER JOIN cart c ON p.id = c.product_id
+    WHERE c.user_id = ?
+    """
+    # Execute the SQL query
+    rows = db.execute(query, (user_id,))
+    # Renders them using the 'cart.html' template.
+    return render_template("cart.html", rows=rows)

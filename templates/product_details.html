@@ -6,118 +6,8 @@
 
 {% block main %}
 
-<!-- Inline CSS styles -->
-<style>
-/* Reset some default browser styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Area and center alignment styles */
-.stack-area {
-  width: 100%;
-  height: 120vh;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.center {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-}
-
-/* Button styles */
-.btn {
-  display: inline-block;
-  background: #333;
-  color: #fff;
-  padding: 10px 20px;
-  margin-left: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-/* Input styles */
-input[type="number"] {
-  width: 10%;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-/* Image styles */
-.col-md-6 img {
-  border-radius: 3px;
-  align-items: center;
-  justify-content: center;
-  width: 75%;
-  height: 55vh;
-  padding: 15px 20px;
-  border: 1px solid white;
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.03);
-}
-
-/* Heading styles */
-h2 {
-  text-align: left;
-  font-size: 30px;
-}
-
-h1 {
-  padding-bottom: 60px;
-}
-
- p:hover {
-    font-size: 14px;
-    color: #330404;
-    opacity: 1; /* Change opacity on hover to make it fully visible */
-  }
-
-a {
-    text-align: left;
-    padding: 20px;
-    margin-top: 3px;
-    font-size: 13px;
-    text-decoration: none;
-    color: black;
-  }
-h5 {
-  color: black;
-  font-size: 15px;
-  line-height: 2;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 700px;
-  opacity: 0.85;
-  text-align: left;
-}
-
-/* Row styles */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-/* Column styles */
-.col-md-6 {
-  width: 50%;
-}
-
-/* Horizontal rule styles */
-hr {
-  margin: 20px 0;
-  border: 0;
-  border-top: 1px solid #ccc;
-}
-
-</style>
+<!-- Link to external CSS file -->
+<link href="/static/productdetails.css" rel="stylesheet">
 
 <!-- Stack area and center div -->
 <div class="stack-area">
@@ -146,18 +36,17 @@ hr {
     <div class="col-md-6">
       <h2>Details:</h2>
       <h5>{{ detail.description }}</h5>
-      <h2>Price: <h5>{{ detail.price }}</h5></h2>
-      {% endfor %}
+      <h2>Price: <h5>{{ detail.price|usd }}</h5></h2>
       {% if session["user_id"] %}
       <!-- Form for adding product to the cart -->
-      <form method="POST" action="/addtocart/{{ product.id }}">
+      <form method="POST" action="/addtocart/{{ detail.id }}" >
         <h2>Quantity:</h2>
         <div class="form-group">
           <div class="row-md-6">
 
           <!-- Input field for quantity -->
           <input type="number" id="quantity" name="quantity" class="form-control" min="1" required placeholder="0">
-          <input type="hidden" name="id" value="{{ product.id }}">
+          <input type="hidden" name="id" value="{{ detail.id }}">
 
           <!-- Button to add to cart -->
           <button type="submit" class="btn">Add to Cart</button>
@@ -167,6 +56,8 @@ hr {
           <a href="{{ url_for('login') }}"><p>Click here to log in and add the product to your cart.
               *</p></a>
           {% endif %}
+          {% endfor %}
+
         </div> </div>
 
       </form>

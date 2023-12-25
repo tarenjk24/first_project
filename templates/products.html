@@ -1,52 +1,56 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Products
+    products
 {% endblock %}
 
 {% block main %}
+<!-- Link to external CSS file -->
 <link href="/static/products.css" rel="stylesheet">
 
-<!-- Section for displaying products -->
+<!-- Section for displaying featured products -->
 <section id="product1" class="section-p1">
-  <div class="title-1">Featured Products</div>
+    <!-- Heading for the featured products section -->
+    <div class="title-1">Featured Products</div>
 
 
+    <!-- Container for the product items -->
+    <div class="pro-container">
+        <div class="part">
+            <ul class="row">
+<!-- Icon for returning to the previous page -->
+    <i class="fa-solid fa-reply" style="color: #000000; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="goBack()"></i>
 
-  <!-- Container for product display -->
-  <div class="pro-container">
-    <div class="part">
-      <ul class="row">
-  <!-- Icon for navigating back -->
-  <i class="fa-solid fa-reply" style="color: #000000;cursor: pointer;display: flex; justify-content: space-between; align-items: center;"  onclick="goBack()"></i>
+    <!-- Script for the goBack function -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+                <!-- Looping through the list of products -->
+                {% for product in products %}
+                <!-- Individual product item -->
+                <li class="col-xs-6 col-md-3">
+                    <div class="pro">
+                        <!-- Displaying the product cover image -->
+                        <img src="{{ product.cover }}" alt="{{ product.name }}">
+                        <!-- Details of the product -->
+                        <div class="des">
+                            <!-- Category of the product -->
+                            <span>{{ product.category }}</span>
+                            <!-- Title of the product -->
+                            <h5>{{ product.name }}</h5>
+                            <!-- Price of the product -->
+                            <h4>{{ product.price|usd }}</h4>
 
-  <!-- JavaScript function to navigate back -->
-  <script>
-      function goBack() {
-          window.history.back();
-      }
-  </script>
-      {% for product in products %}
-        <!-- List item for each product -->
-        <li class="col-xs-6 col-md-3">
-          <div class="pro">
-            <!-- Product image -->
-            <img src="{{ product.cover }}" alt="{{ product.name }}">
-            <div class="des">
-              <!-- Product brand -->
-              <span>{{ product.brand }}</span>
-              <!-- Product name -->
-              <h5>{{ product.name }}</h5>
-              <!-- Product price -->
-              <h4>{{ product.price }}</h4>
-              <!-- Link to the product details page -->
-              <a href="{{ url_for('productdetails', id=product.id) }}"> details </a>
-            </div>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
+                            <!-- Link to the details page for the product -->
+                            <a href="{{ url_for('productdetails', id=product.id) }}"> details </a>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </section>
 {% endblock %}

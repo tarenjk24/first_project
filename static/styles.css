@@ -1,26 +1,20 @@
+/* Global Styles */
 body {
   height: fit-content;
   background-image: linear-gradient(transparent 79%, transparent 100%),
     linear-gradient(white 0, transparent 21%),
     linear-gradient(75deg, white 0, rgba(0, 0, 0, 0.19) 46.5%, white 100%);
-  border-top-color: initial;
-  border-top-style: initial;
-  border-top-width: 0;
-  font-family: CerebriSans-Regular, -apple-system, BlinkMacSystemFont, Roboto,
-    sans-serif;
   font-size: 18px;
   margin: 6em 0;
   max-width: 100%;
   padding: 0;
   text-align: center;
 }
+
 /* Header Styles */
 .bar {
   background-color: transparent;
   box-sizing: border-box;
-  color: #ffffff;
-  font-family: CerebriSans, -apple-system, BlinkMacSystemFont, Roboto,
-    sans-serif;
   font-size: 18px;
   left: 0;
   margin: 0 auto;
@@ -34,20 +28,16 @@ body {
   transition-behavior: normal;
   width: 100%;
   z-index: 99;
+  backdrop-filter: blur(3px);
 }
-
 .navbar {
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(3px);
-
 }
 .navbar ul {
   align-items: center;
   color: #ffffff;
   display: flex;
-  font-family: CerebriSans, -apple-system, BlinkMacSystemFont, Roboto,
-    sans-serif;
   font-size: 18px;
   justify-content: space-between;
   text-align: center;
@@ -57,10 +47,7 @@ body {
 }
 .navbar ul .edge {
   align-items: center;
-  color: #ffffff;
   display: flex;
-  font-family: CerebriSans, -apple-system, BlinkMacSystemFont, Roboto,
-    sans-serif;
   font-size: 18px;
   justify-content: flex-end;
   list-style: none;
@@ -71,12 +58,26 @@ body {
 }
 .navbar li {
   display: inline-block;
-  float: left;
   list-style: none;
   padding: 0 20px;
 }
+.navbar li a {
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  display: inline-block;
+  transition: 0.3 ease;
+  z-index: 999;
+  position: sticky;
+  top: 0;
+  left: 0;
+  border-radius: 2px;
+}
 
-/* CSS */
+
+/* CSS Button*/
 .button-52 {
   font-size: 16px;
   font-weight: 200;
@@ -88,8 +89,6 @@ body {
   position: relative;
   background-color: rgba(0, 0, 0, 0);
   user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 .button-52:after {
   content: "";
@@ -107,49 +106,25 @@ body {
   left: 0px;
 }
 
-.navbar li a {
-  padding: 15px 20px;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
-  display: inline-block;
-  transition: 0.3 ease;
-  z-index: 999;
-  position: sticky;
-  top: 0;
-  left: 0;
-  border-radius: 2px;
-}
-#mobile {
-  display: none;
-  align-items: center;
-}
+
+
 /* Hero Section Styles */
 #hero {
   background-image: url("img/hero.png");
-  height: 55vh;
+  height: 50vh;
   width: 100%;
-  background-position: top 30% right 10;
-  padding: 0 80px;
+  background-position: top 30% right 9%;
+  padding: 0 60px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
   border-radius: 4px;
 }
-/*features section*/
-.center {
-  background-image: linear-gradient(transparent 79%, transparent 100%),
-    linear-gradient(white 0, transparent 21%),
-    linear-gradient(75deg, white 0, rgba(0, 0, 0, 0.19) 46.5%, white 100%);
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+
+
+
+/* Features Section Styles */
 .stack-area {
   width: 100%;
   height: 300vh;
@@ -168,50 +143,26 @@ body {
   box-sizing: border-box;
   flex-basis: 50%;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   background-image: conic-gradient(
-      from 90deg at 80% 50%,
-      #c0c0cb 0%,
-      rgb(239, 253, 255, 0.8) 100%
-    ),
-    conic-gradient(from 270deg at 20% 50%, rgb(239, 253, 255, 0.8), #83838b);
+    from 90deg at 80% 50%,
+    #c0c0cb 0%,
+    rgb(239, 253, 255, 0.8) 100%
+  ),
+  conic-gradient(from 270deg at 20% 50%, rgb(239, 253, 255, 0.8), #83838b);
 }
-
 .cards {
-  background-image: conic-gradient(
-      from 90deg at 80% 50%,
-      #bba7a7 0%,
-      rgb(239, 253, 255, 0.8) 100%
-    ),
-    conic-gradient(from 270deg at 20% 50%, rgb(239, 253, 255, 0.8), #4d3d3d);
   width: 100%;
   height: 100%;
   position: relative;
-}
-.slides {
-  margin: 50px;
-  padding: 50px;
-}
-.mySlides {
-  padding: 15px 20px;
-  transition: 0.3 ease;
-  border-radius: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  align-items: center;
-  width: 100%;
-  height: 70vh;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  background-image: conic-gradient(
+    from 90deg at 80% 50%,
+    #bba7a7 0%,
+    rgb(239, 253, 255, 0.8) 100%
+  ),
+  conic-gradient(from 270deg at 20% 50%, rgb(239, 253, 255, 0.8), #4d3d3d);
 }
 .card {
-  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
-    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   width: 350px;
   height: 310px;
   box-sizing: border-box;
@@ -224,21 +175,24 @@ body {
   top: 50%;
   left: 50%;
   transition: 0.5s ease-in-out;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+  rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 .card:nth-child(1) {
-  background: #3b3737;
+  background: #1c1515;
   z-index: 4;
 }
 .card:nth-child(2) {
-  background: rgb(75, 75, 75);
+  background: rgb(39, 21, 21);
   z-index: 3;
 }
 .card:nth-child(3) {
-  background: rgb(100, 100, 100);
+  background: rgb(64, 50, 50);
   z-index: 2;
 }
 .card:nth-child(4) {
-  background: rgb(120, 120, 120);
+  background: rgb(109, 89, 89);
   z-index: 1;
 }
 .sub {
@@ -248,22 +202,12 @@ body {
   line-height: 54px;
   color: white;
 }
-
-.sub-title {
+.content {
   font-family: poppins;
-  font-size: 15px;
-  font-weight: 70;
-  margin-right: 20px;
-  padding-right: 100px;
-  text-align: left;
-
-  padding-bottom: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 100px;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 54px;
 }
-
 .card.active {
   transform-origin: bottom left;
 }
@@ -271,28 +215,27 @@ body {
   align-items: center;
   flex-direction: column;
 }
-
 .title {
   width: 420px;
   font-size: 88px;
-  font-family: CerebriSans, -apple-system, BlinkMacSystemFont, Roboto,
-    sans-serif;
+  font-family: poppins;
+  font-weight: 600;
   line-height: 88px;
   color: black;
-  font-weight: 600;
   max-width: 800px;
   text-align: right;
-  margin-left: 99px;
-  margin-right: 1px;
-  padding-left: 99px;
-  padding-bottom: 30px;
-}
+  margin: 0 1px 0 99px;
+  padding: 0 99px 30px 0;
 
-.vertical-line {
-  border-left: 2px solid #000; /* Adjust the thickness and color as needed */
-  height: 400px; /* Adjust the height of the line as needed */
-  margin-left: 70px;
-  margin-top: 600px; /* Adjust the distance from the left edge as needed */
+}
+.sub-title {
+  text-align: left;
+  width: 420px;
+  font-weight: 100;
+  font-family: poppins;
+  font-size: 15px;
+  margin: 10px 20px 10px 0;
+  padding: 10px 100px 10px 100px;
 }
 .sub-title button {
   font-family: poppins;
@@ -317,8 +260,66 @@ body {
   justify-content: center;
 }
 
-/* Newsletter Section Styles */
+/* Slides Section Styles */
+.slides {
+  margin: 50px;
+  padding: 50px;
+}
+.mySlides {
+  padding: 15px 20px;
+  transition: 0.3 ease;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  align-items: center;
+  width: 100%;
+  height: 70vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.vertical-line {
+  border-left: 2px solid #000;
+  height: 400px;
+  margin-left: 70px;
+  margin-top: 600px;
+}
+.center {
+  background-image: linear-gradient(transparent 79%, transparent 100%),
+    linear-gradient(white 0, transparent 21%),
+    linear-gradient(75deg, white 0, rgba(0, 0, 0, 0.19) 46.5%, white 100%);
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+/* Container Styles for (terms and condition, delivery information, about us, privacy policy) */
+.container {
+  background-image: conic-gradient(
+    from 90deg at 80% 50%,
+    #bba7a7 0%,
+    rgb(239, 253, 255, 0.8) 100%
+  ),
+  conic-gradient(from 270deg at 20% 50%, rgb(239, 253, 255, 0.8), #4d3d3d);
+  border-radius: 10px;
+  box-shadow: rgba(255, 255, 255, 0.1) 0 0 0 1px inset;
+  flex-direction: column;
+  font-size: 18px;
+  padding: 32px;
+  text-align: center;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+}
 
+
+
+/* Newsletter Section Styles */
 .newsletter {
   background: black;
   background-size: cover;
@@ -326,7 +327,6 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  backgroun-repeat: no-repeat;
   background-position: 20% 30%;
   width: 100%;
   height: 20vh;
@@ -339,7 +339,7 @@ body {
 }
 .newsletter .form {
   display: flex;
-  width: 40%;
+  width: 80%;
 }
 .newsletter input {
   height: 3.125rem;
@@ -352,7 +352,6 @@ body {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-
 .newsletter button {
   border-radius: 4px;
   background-color: white;
@@ -361,7 +360,8 @@ body {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* footer */
+
+
 /* Footer Styles */
 footer {
   display: flex;
@@ -402,7 +402,6 @@ footer a {
   margin-bottom: 10px;
   padding: 5px;
   margin-top: 3px;
-  font-size: 13px;
   text-decoration: none;
 }
 footer .follow {
@@ -431,3 +430,4 @@ footer .copyright {
   width: 100%;
   text-align: center;
 }
+

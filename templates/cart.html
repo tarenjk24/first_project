@@ -1,64 +1,46 @@
 {% extends "layout.html" %}
-
 {% block title %}
-  Cart
-{% endblock %}
+ Cart
+  {% endblock %}
+  {% block main %}
 
-{% block main %}
 <!-- Link to external CSS file for styling the page -->
 <link href="/static/profile.css" rel="stylesheet">
 
-<!-- Centered container for the cart information -->
+<!-- Container for the cart information -->
 <div class="center">
     <div class="area">
-        <div class="left">
-            <div class="section">
-                <div class="info">
-                    <!-- Heading for the cart section -->
-                    <h2 class="text-center my-4">Your Cart</h2>
-
-                    <!-- Responsive table to display the cart contents -->
-                    <div class="table-responsive">
-                        <table class="table table-grey table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Cover</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Availability</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if not rows %}
-                                <tr>
-                                    <td colspan="6">Your cart is empty.</td>
-                                </tr>
-                                {% else %}
-                                {% for row in rows %}
-                                <tr>
-                                    <td> <img src="{{ row.cover }}" alt="{{ row.title }}"></td>
-                                    <td>{{ row.name }}</td>
-                                    <td>{{ row.availability }}</td>
-                                    <td>{{ row.quantity }}</td>
-                                    <td>{{ row.price }}</td>
-                                    <td>{{ (row.price * row.quantity) }}</td>
-                                </tr>
-                                {% endfor %}
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Link to navigate back to the products page -->
-                    {% if rows %}
-                    <a href="/payment">Check Out</a>
-                    {% endif %}
-                    <a href="/">Back to Catalog</a>
-                </div>
-            </div>
-        </div>
+      <div class="left">
+            <div class="info">
+          <!-- Heading for the cart section -->
+          <h2 class="text-center my-4">Your Cart</h2>
+            <!-- Table for displaying cart information -->
+            <table class="table table-grey table-hover">
+            <thead>
+              <tr>
+                <th class="text-start">Cover</th>
+                <th class="text-end">Product Name</th>
+                <th class="text-end">Quantity</th>
+                <th class="text-end">Price</th>
+              </tr>
+            </thead>
+             <!-- Iterate through the cart  -->
+            <tbody> {% for row in rows %}
+                <tr>
+                <td class="text-start">
+                  <img src="{{ row.cover }}" alt="{{ row.title }}">
+                </td>
+                <td class="text-end">{{ row.name }}</td>
+                <td class="text-end">{{ row.quantity }}</td>
+                <td class="text-end">{{ row.price }}</td>
+              </tr> {% endfor %}
+            </tbody>
+          </table>
+        <!-- Link to navigate back to the catalog page or to check out -->
+        <a href="/payment">Check Out</a>
+        <a href="/">Back to Catalog</a>
+      </div>
     </div>
 </div>
 {% endblock %}
+

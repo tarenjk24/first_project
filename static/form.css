@@ -106,7 +106,7 @@ a:hover {
   color: #d04c3f;
 }
 
-/* Styling for buttons */
+/* /* CSS Button*/
 .button-35 {
   align-items: center;
   background-color: #fff;
@@ -133,8 +133,6 @@ a:hover {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
-/* Styling for button hover */
 .button-35:hover {
   box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
 }

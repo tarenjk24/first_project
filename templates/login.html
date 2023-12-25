@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+<!-- Link to external CSS file for styling the page -->
 <link href="/static/form.css" rel="stylesheet">
 
 <!-- Form for user login -->
@@ -12,7 +13,6 @@
   <div class="center" id="div">
     <form action="/login" method="post">
       <span class="section">
-        <!-- Header for the login form -->
         <div class="head">Sign in</div>
 
         <!-- Input field for username -->
@@ -34,10 +34,11 @@
           </div>
         </div>
 
-        <!-- Button to submit the login form -->
-        <button class="button-35" type="submit">Sign in</button>
+          <!-- Button to submit the form -->
+          <button class="button-35" type="submit">Sign in</button>
       </span>
     </form>
   </div>
 </div>
 {% endblock %}
+

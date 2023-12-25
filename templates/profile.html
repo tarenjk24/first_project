@@ -5,15 +5,15 @@
 {% endblock %}
 
 {% block main %}
+<!-- Link to external CSS file for styling the page -->
 <link href="/static/profile.css" rel="stylesheet">
 
 <!-- Container for profile information -->
 <div class="center">
   <div class="area">
     <div class="left">
-        <div class="section">
           <div class="info">
-            <h2>Personal Information</h2>
+            <h2 class="text-center my-4">Personal Information</h2>
             <!-- Displaying username -->
             <p><strong>Username:</strong> {{ user_data["username"] }}</p>
 
@@ -23,26 +23,24 @@
                   <tr>
                     <th class="text-start">address</th>
                     <th class="text-end">city</th>
-                    <th class="text-end">state</th>
                     <th class="text-end">postal code</th>
                     <th class="text-end">phone number</th>
                   </tr>
                 </thead>
                 <tbody>
                   <!-- Check if there is no information available -->
-                  {% if not informations %}
+                  {% if not orders %}
                     <tr>
                       <td colspan="5">No information available.</td>
                     </tr>
                   {% else %}
                     <!-- Iterate through the information -->
-                    {% for information in informations %}
+                    {% for order in orders %}
                       <tr>
-                        <td class="text-start">{{ information.address }}</td>
-                        <td class="text-end">{{ information.city }}</td>
-                        <td class="text-end">{{ information.state }}</td>
-                        <td class="text-end">{{ information.postal_code }}</td>
-                        <td class="text-end">{{ information.phone_number }}</td>
+                        <td class="text-start">{{ order.address }}</td>
+                        <td class="text-end">{{ order.city }}</td>
+                        <td class="text-end">{{ order.postal_code }}</td>
+                        <td class="text-end">{{ order.phone_number }}</td>
                       </tr>
                     {% endfor %}
                   {% endif %}
@@ -71,11 +69,12 @@
                   <!-- Iterate through the order history -->
                   {% for order in orders %}
                     <tr>
-                      <td>{{ order.order_id }}</td>
-                      <td>{{ order.order_date }}</td>
-                      <td>{{ order.total_amount }}</td>
+                      <td>{{ order.id }}</td>
+                      <td>{{ order.history }}</td>
+                      {% endfor %}
+
+                      <td>{{ total_amount|usd }}</td>
                     </tr>
-                  {% endfor %}
                 {% endif %}
               </tbody>
             </table>
@@ -84,7 +83,6 @@
             <p><a href="/cart">Check cart</a></p>
           </div>
         </div>
-    </div>
   </div>
 </div>
 
