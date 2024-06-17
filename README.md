@@ -7,5 +7,13 @@
 </p>
 
 ---
-CS50x final project. A business web app for a library.
+## Description
+CS50x final project. A fullstack business web app for a library.
+## Content 
+* Home
+* Products
+* Sign up
+* Books
+* Cart
+* Profile
 ---
